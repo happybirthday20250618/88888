@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <!-- Google Fontsの手書き風フォントを追加 -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8e5d4;  /* 明るいオレンジ色の背景 */
+            font-family: 'Pacifico', sans-serif;  /* 手書き風フォント */
+            text-align: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden; /* 横スクロールを無効にする */
+            min-height: 100vh; /* 画面の高さを最低でも100%にする */
+        }
+
+        h1 {
+            color: #ff5733;  /* 鮮やかな赤 */
+            font-size: 4em;  /* 少し大きめに */
+            margin-top: 50px;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* 2025.06.18の日付 */
+        .date {
+            color: #ffad33;  /* 明るい黄色 */
+            font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
+            margin-bottom: 20px;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        /* テキストの跳ねるアニメーション */
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-10px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        img {
+            width: 70%;  /* 画像のサイズ調整 */
+            margin-top: 20px;
+            border-radius: 10px;  /* 画像の角を丸くする */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* 影を追加 */
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* 画像がフェードインするアニメーション */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* バルーンのアニメーション */
+        .balloon {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            background: url('balloon.png') no-repeat center center;
+            background-size: contain;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 風船の浮遊アニメーションをランダム化 */
+        @keyframes float {
+            0% { bottom: -150px; left: 5%; }
+            25% { bottom: 20%; left: 25%; }
+            50% { bottom: 40%; left: 50%; }
+            75% { bottom: 60%; left: 75%; }
+            100% { bottom: 100vh; left: 100%; }
+        }
+
+        /* コンフェッティ（紙吹雪）のアニメーション */
+        .confetti {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #ffad33;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* ポップアップメッセージのスタイル */
+        .popup {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            color: #ff5733;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="date">2025.06.18</div>
+    <h1>Happy Birthday!</h1>
+
+    <!-- 画像表示 -->
+    <img src="sample-image.jpg" alt="祝福の画像">
+
+    <!-- バルーン -->
+    <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="balloon" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="balloon" style="left: 90%; animation-delay: 4s;"></div>
+
+    <!-- コンフェッティ（紙吹雪） -->
+    <div class="confetti" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="confetti" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="confetti" style="left: 45%; animation-delay: 2s;"></div>
+    <div class="confetti" style="left: 60%; animation-delay: 3s;"></div>
+    <div class="confetti" style="left: 75%; animation-delay: 4s;"></div>
+    <div class="confetti" style="left: 90%; animation-delay: 5s;"></div>
+    <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
+    <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
+    <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
+    <div class="confetti" style="left: 55%; animation-delay: 9s;"></div>
+    <div class="confetti" style="left: 70%; animation-delay: 10s;"></div>
+    <div class="confetti" style="left: 85%; animation-delay: 11s;"></div>
+
+  
+
+    <script>
+        // ページが読み込まれたときにポップアップを表示
+        window.onload = function() {
+            document.querySelector('.popup').style.display = 'block';
+            setTimeout(function() {
+                document.querySelector('.popup').style.display = 'none';
+            }, 4000);  // 4秒後にポップアップを消す
+        }
+    </script>
+
+</body>
+</html>
