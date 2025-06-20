@@ -108,10 +108,9 @@
             background-size: contain;
             animation: float 15s ease-in-out infinite;
             opacity: 0.9;
-            /* z-indexはコンテナで設定済みなので不要 */
         }
 
-        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外のさらに下に調整 */
+        /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
             0% { transform: translateY(150vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに下から開始、最初は完全に透明 */
             5% { opacity: 0.8; } /* 少し上がって見えるようになる */
@@ -119,7 +118,7 @@
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
             90% { opacity: 0.0; } /* ここで完全に透明にする */
-            100% { transform: translateY(-180vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
+            100% { transform: translateY(-200vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -197,7 +196,7 @@
 
         .popup {
             position: fixed;
-            top: 95%; /* ポップアップ位置 */
+            top: 85%; /* ここを85%に調整しました！ */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -326,7 +325,10 @@
 
     <div class="confetti-container" id="confetti-container"></div>
     <div class="gift-container" id="gift-container"></div>
-    <div class="balloon-container" id="balloon-container"></div> <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="balloon-container" id="balloon-container"></div>
+
+
+    <div class="popup-overlay" id="popup-overlay"></div>
 
     <div class="popup" id="birthday-popup">
         <p>素敵な人生になりますように！🎉</p>
@@ -339,7 +341,7 @@
         const tapMessage = document.getElementById('tap-message');
         const confettiContainer = document.getElementById('confetti-container');
         const giftContainer = document.getElementById('gift-container');
-        const balloonContainer = document.getElementById('balloon-container'); 
+        const balloonContainer = document.getElementById('balloon-container');
         const popup = document.getElementById('birthday-popup');
         const overlay = document.getElementById('popup-overlay');
         const imageGrid = document.getElementById('image-grid');
@@ -371,8 +373,8 @@
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
-            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            balloon.style.animationDelay = (Math.random() * 10) + 's';
+            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 持続時間
+            balloon.style.animationDelay = (Math.random() * 5) + 's'; // 開始遅延を最大5秒に短縮
             balloonContainer.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
