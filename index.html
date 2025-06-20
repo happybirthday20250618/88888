@@ -108,18 +108,21 @@
             background-size: contain;
             bottom: -220px; /* ここで風船を画面外の最下部に配置 */
             opacity: 0.9;
-            animation: float 15s ease-in-out infinite; /* JSでdurationとdelayを上書き */
+            /* animationはJSで個別に設定するため、ここでは初期値を残す */
+            /* animation: float 15s ease-in-out infinite; */
         }
 
-        /* 風船の浮遊アニメーションをランダム化 */
+        /* 風船の浮遊アニメーション */
+        /* translateXの値をランダムにするため、JSでkeyframesを動的に生成します */
+        /* ここは元の定義を残しますが、JSで上書きされることを想定します */
         @keyframes float {
-            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* bottomで設定された位置から開始、垂直方向の移動は0vh */
-            5% { opacity: 0.5; } /* ゆっくりと透明度が上がるように調整 */
-            25% { transform: translateY(-75vh) translateX(150px) rotate(8deg); opacity: 0.9; } /* 上方向に移動 */
-            50% { transform: translateY(-120vh) translateX(-150px) rotate(-8deg); opacity: 1; } /* さらに上方向に移動 */
-            75% { transform: translateY(-180vh) translateX(75px) rotate(4deg); opacity: 0.9; } /* さらに上方向に移動 */
-            85% { opacity: 0.0; } /* ここで完全に透明にする */
-            100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動 */
+            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.0; }
+            5% { opacity: 0.5; }
+            25% { transform: translateY(-75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
+            50% { transform: translateY(-120vh) translateX(-150px) rotate(-8deg); opacity: 1; }
+            75% { transform: translateY(-180vh) translateX(75px) rotate(4deg); opacity: 0.9; }
+            85% { opacity: 0.0; }
+            100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; }
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -374,14 +377,49 @@
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
-            // CSSで `bottom: -220px;` を設定しているので、JSではbottomを動的に設定する必要はありません。
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
-            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10秒から20秒の範囲
-            balloon.style.animationDelay = (Math.random() * 10) + 's'; // 0秒から10秒の範囲
+            
+            const duration = Math.random() * 10 + 10; // 10秒から20秒の範囲
+            const delay = Math.random() * 10; // 0秒から10秒の範囲
+
+            // ランダムな横方向の動きを定義
+            // translateX の値を -300px から 300px の間でランダムに設定
+            const startX = (Math.random() - 0.5) * 600; // -300 から 300
+            const midX1 = (Math.random() - 0.5) * 600;
+            const midX2 = (Math.random() - 0.5) * 600;
+            const endX = (Math.random() - 0.5) * 600;
+
+            // 動的にキーフレームを生成
+            const styleSheet = document.styleSheets[0];
+            const animationName = `float-${Math.random().toString(36).substring(7)}`; // ユニークなアニメーション名を生成
+            
+            const keyframes = `
+                @keyframes ${animationName} {
+                    0% { transform: translateY(0vh) translateX(${startX}px) rotate(0deg); opacity: 0.0; }
+                    5% { opacity: 0.5; }
+                    25% { transform: translateY(-75vh) translateX(${midX1}px) rotate(8deg); opacity: 0.9; }
+                    50% { transform: translateY(-120vh) translateX(${midX2}px) rotate(-8deg); opacity: 1; }
+                    75% { transform: translateY(-180vh) translateX(${endX}px) rotate(4deg); opacity: 0.9; }
+                    85% { opacity: 0.0; }
+                    100% { transform: translateY(-250vh) translateX(${startX}px) rotate(0deg); opacity: 0.0; }
+                }
+            `;
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+            balloon.style.animation = `${animationName} ${duration}s ease-in-out ${delay}s infinite`;
+
             balloonContainer.appendChild(balloon);
 
+            // アニメーション終了時に要素とスタイルルールを削除してメモリリークを防ぐ
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
+                // 関連する@keyframesルールも削除（オプションだが、大量生成の場合は推奨）
+                for (let i = 0; i < styleSheet.cssRules.length; i++) {
+                    if (styleSheet.cssRules[i].name === animationName) {
+                        styleSheet.deleteRule(i);
+                        break;
+                    }
+                }
                 createBalloon();
             });
         }
