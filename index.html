@@ -127,7 +127,7 @@
             100% { transform: translateY(100vh) rotate(1080deg); }
         }
 
-        /* Gift Box Animation */
+        /* Gift Box Animation - 新しく追加 */
         .gift-container {
             position: absolute;
             bottom: 0;
@@ -136,14 +136,14 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 2;
+            z-index: 2; /* バルーンより少し下、背景より上 */
         }
 
         .gift {
             position: absolute;
-            width: 80px;
+            width: 80px; /* ギフトボックスのサイズ */
             height: 80px;
-            background: url('gift-box.png') no-repeat center center;
+            background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像を指定 */
             background-size: contain;
             animation: giftFloat var(--duration) ease-in-out infinite;
             opacity: 0.9;
@@ -154,7 +154,7 @@
             25% { bottom: 25%; transform: translateX(70px) scale(1.1); opacity: 0.9; }
             50% { bottom: 50%; transform: translateX(-70px) scale(1.2); opacity: 1; }
             75% { bottom: 75%; transform: translateX(40px) scale(1.1); opacity: 0.9; }
-            100% { bottom: 100vh; transform: translateX(0px) scale(0.8); opacity: 0.8; }
+            100% { bottom: 100vh; transform: translateX(0px) scale(0.8); opacity: 0.8; } /* 画面上部まで行って消える */
         }
 
         /* ポップアップメッセージのスタイル */
@@ -182,7 +182,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: none;
             z-index: 10;
-            animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* 新しい登場アニメーション */
             width: auto;
             max-width: 550px;
             white-space: nowrap;
@@ -193,11 +193,18 @@
             font-weight: bold;
         }
 
-        /* パーティクルのスタイル */
+        /* ポップアップ登場アニメーション */
+        @keyframes popupAppear {
+            0% { transform: translate(-50%, -30%) scale(0.7); opacity: 0; }
+            80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        /* パーティクルのスタイル - 新しく追加 */
         .particle {
             position: absolute;
-            background-color: #ffd700;
-            border-radius: 50%;
+            background-color: #ffd700; /* キラキラの色 */
+            border-radius: 50%; /* 丸い形 */
             opacity: 0;
             animation: particleFloat var(--duration) linear infinite;
         }
@@ -206,7 +213,7 @@
             0% { transform: translateY(0vh) scale(0); opacity: 0; }
             10% { opacity: 0.8; transform: scale(1); }
             90% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; } /* 下から上に流れて消える */
         }
     </style>
 </head>
@@ -287,49 +294,53 @@
             createConfetti();
         }
 
-        // ギフトボックスを動的に生成するJavaScript
+        // ギフトボックスを動的に生成するJavaScript（追加）
         const giftContainer = document.getElementById('gift-container');
-        const giftImages = ['gift-box.png'];
+        const giftImages = ['gift-box.png']; // 'gift-box.png' という画像ファイルが必要です
 
         function createGift() {
             const gift = document.createElement('div');
             gift.classList.add('gift');
-            gift.style.left = Math.random() * 100 + 'vw';
+            gift.style.left = Math.random() * 100 + 'vw'; // 画面の横幅全体からランダムな位置
             gift.style.backgroundImage = `url(${giftImages[Math.floor(Math.random() * giftImages.length)]})`;
-            gift.style.animationDuration = (Math.random() * 6 + 8) + 's';
-            gift.style.animationDelay = (Math.random() * 10) + 's';
+            gift.style.animationDuration = (Math.random() * 6 + 8) + 's'; // 浮遊アニメーションの速度
+            gift.style.animationDelay = (Math.random() * 10) + 's'; // アニメーション開始の遅延
             giftContainer.appendChild(gift);
 
+            // 画面外に出たら要素を削除して新しく生成し直す
             gift.addEventListener('animationend', () => {
                 gift.remove();
                 createGift();
             });
         }
 
-        for (let i = 0; i < 40; i++) {
+        // 複数のギフトボックスを生成
+        for (let i = 0; i < 40; i++) { // 表示するギフトボックスの数
             createGift();
         }
 
-        // パーティクルを動的に生成するJavaScript
+        // パーティクルを動的に生成するJavaScript（追加）
         function createParticle() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
-            const size = Math.random() * 3 + 2;
+            const size = Math.random() * 3 + 2; // パーティクルのサイズをランダムに
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
-            particle.style.left = `${Math.random() * 100}vw`;
-            particle.style.bottom = `${Math.random() * 100}vh`;
-            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-            particle.style.animationDelay = `${Math.random() * 3}s`;
+            particle.style.left = `${Math.random() * 100}vw`; // 画面の横幅全体からランダムな位置
+            particle.style.bottom = `${Math.random() * 100}vh`; // 画面の下からランダムな位置で開始
+            particle.style.animationDuration = `${Math.random() * 5 + 5}s`; // アニメーションの速度
+            particle.style.animationDelay = `${Math.random() * 3}s`; // アニメーション開始の遅延
             document.body.appendChild(particle);
 
+            // 画面外に出たら要素を削除して新しく生成し直す
             particle.addEventListener('animationend', () => {
                 particle.remove();
                 createParticle();
             });
         }
 
-        for (let i = 0; i < 80; i++) {
+        // 複数のパーティクルを生成
+        for (let i = 0; i < 80; i++) { // 表示するパーティクルの数
             createParticle();
         }
 
@@ -340,7 +351,7 @@
             setTimeout(() => {
                 overlay.style.display = 'block';
                 popup.style.display = 'block';
-            }, 3000);
+            }, 3000); // 3秒後にポップアップを表示
         };
     </script>
 </body>
