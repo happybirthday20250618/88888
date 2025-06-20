@@ -112,13 +112,13 @@
 
         /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
-            0% { transform: translateY(150vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに下から開始、最初は完全に透明 */
-            5% { opacity: 0.8; } /* 少し上がって見えるようになる */
+            0% { transform: translateY(200vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに下から開始（200vhに調整） */
+            5% { opacity: 0.5; } /* ゆっくりと透明度が上がるように調整 */
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
             85% { opacity: 0.0; } /* ここで完全に透明にする */
-            100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
+            100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -196,7 +196,7 @@
 
         .popup {
             position: fixed;
-            top: 75%; /* ここを75%に調整しました！ */
+            top: 75%; /* ポップアップ位置 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -372,9 +372,10 @@
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
+            balloon.style.bottom = `-220px`; // 風船の高さ分、画面外の下に配置
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10秒から20秒の範囲
-            balloon.style.animationDelay = (Math.random() * 8) + 's'; // 0秒から8秒の範囲
+            balloon.style.animationDelay = (Math.random() * 10) + 's'; // 0秒から10秒の範囲
             balloonContainer.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
