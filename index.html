@@ -47,18 +47,24 @@
             100% { transform: translateY(0); }
         }
 
-        /* 画像がタイル状に背景として表示 */
-        .image-background {
+        /* 画像が小さく並ぶように */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  /* 100px以上のサイズでグリッド配置 */
+            grid-gap: 10px;  /* 画像同士の間隔 */
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('sample-image.JPG');
-            background-size: cover;
-            background-repeat: repeat;
             z-index: 1;  /* 背景として表示 */
-            opacity: 0.7;  /* 少し透過させて文字を見やすくする */
+            opacity: 0.6;  /* 少し透過させて文字を見やすくする */
+        }
+
+        .image-grid img {
+            width: 100%;  /* 画像が親要素の幅に合わせて伸縮 */
+            height: auto;  /* 高さは自動で調整 */
+            border-radius: 5px;
         }
 
         /* バルーンのアニメーション */
@@ -113,8 +119,17 @@
 </head>
 <body>
 
-    <!-- 画像背景 -->
-    <div class="image-background"></div>
+    <!-- 画像が並ぶグリッド -->
+    <div class="image-grid">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+    </div>
 
     <div class="date">2025.06.18</div>
     <h1>Happy Birthday!</h1>
