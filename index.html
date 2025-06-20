@@ -238,3 +238,24 @@
 
         function createGift() {
             const gift = document.createElement('div');
+            gift.classList.add('gift');
+            gift.style.left = Math.random() * 100 + 'vw';
+            gift.style.backgroundImage = `url(${giftImages[Math.floor(Math.random() * giftImages.length)]})`;
+            gift.style.animationDuration = (Math.random() * 5 + 7) + 's'; // 7-12秒のランダムな時間
+            gift.style.animationDelay = (Math.random() * 8) + 's'; // 0-8秒のランダムな遅延
+            giftContainer.appendChild(gift);
+
+            // 画面外に出たら削除して新しいものを生成
+            gift.addEventListener('animationend', () => {
+                gift.remove();
+                createGift();
+            });
+        }
+
+        // 多数のギフトボックスを生成
+        for (let i = 0; i < 20; i++) { // ギフトボックスの数を調整
+            createGift();
+        }
+    </script>
+</body>
+</html>
