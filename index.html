@@ -145,43 +145,20 @@
             100% { bottom: 100vh; transform: translateX(0px); opacity: 0.8; }
         }
 
-        /* Pop-up Message */
-        .popup {
-            position: fixed; /* 画面中央に固定 */
-            top: 50%;
+        /* Birthday Message at the bottom */
+        .bottom-message {
+            position: absolute; /* ページ下部に絶対配置 */
+            bottom: 50px; /* 下からの距離 */
             left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 30px 40px;
-            border-radius: 15px;
+            transform: translateX(-50%);
             font-size: 2em; /* 大きめのフォント */
             color: #ff5733;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            display: none; /* 初期状態では非表示 */
-            z-index: 10; /* 最前面に表示 */
-            animation: popupAppear 0.5s ease-out forwards; /* ポップアップアニメーション */
-            /* ここを修正: ポップアップの幅を広げる */
-            width: 70%; /* 例: 画面幅の70%にする */
-            max-width: 800px; /* 最大幅を設定して大きくなりすぎないようにする */
-            box-sizing: border-box; /* paddingを含めて幅を計算 */
-        }
-
-        @keyframes popupAppear {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-
-        /* Footer Message */
-        .footer-message {
-            position: relative;
-            margin-top: 50px;
-            padding-bottom: 20px;
-            width: 100%;
-            font-size: 1.5em;
-            color: #777;
-            z-index: 5;
+            z-index: 5; /* 他の要素より手前に */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            width: 80%; /* 幅を広げてテキストが収まりやすくする */
+            max-width: 600px; /* 最大幅を設定 */
+            line-height: 1.3; /* 行間を調整 */
+            text-align: center; /* 中央揃え */
         }
     </style>
 </head>
@@ -229,12 +206,8 @@
 
     <div class="gift-container" id="gift-container"></div>
 
-    <div class="popup" id="birthday-popup">
-        <p>素敵な一年になりますように！🎉</p>
-    </div>
-
-    <div class="footer-message">
-        <p>たくさんの愛を込めて</p>
+    <div class="bottom-message">
+        <p>素敵な一年になりますように！🎉<br>たくさんの思い出を</p>
     </div>
 
     <script>
@@ -290,13 +263,8 @@
             createGift();
         }
 
-        // ポップアップメッセージを表示するJavaScript
-        window.onload = () => {
-            const popup = document.getElementById('birthday-popup');
-            setTimeout(() => {
-                popup.style.display = 'block';
-            }, 3000); // ページ読み込み後3秒で表示
-        };
+        // ポップアップに関するJavaScriptは削除されました。
+        // window.onload でのポップアップ表示処理も削除されました。
     </script>
 </body>
 </html>
