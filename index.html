@@ -14,8 +14,8 @@
             margin: 0;
             padding: 0;
             position: relative;
-            /* overflow: hidden を削除してスクロールを有効にする */
-            min-height: 100vh; /* 最小高さを確保 */
+            overflow: hidden; /* 横スクロールを無効にする */
+            min-height: 100vh; /* 画面の高さを最低でも100%にする */
         }
 
         h1 {
@@ -25,16 +25,17 @@
             animation: bounce 1.5s infinite ease-in-out;
             position: relative;
             z-index: 6;  /* 文字を最前面に表示 */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);  /* 影で立体感を出す */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 影で立体感を出す */
         }
 
+        /* 2025.06.18の日付 */
         .date {
             color: #ffad33;  /* 明るい黄色 */
             font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
             position: relative;
-            z-index: 6;
+            z-index: 6;  /* 文字を画像より前面に表示 */
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -47,18 +48,21 @@
             100% { transform: translateY(0); }
         }
 
-        /* 画像を小さく並べるグリッド */
+        /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4つのカラムを均等に配置 */
-            grid-gap: 5px;
-            /* position: absolute; top: 0; left: 0; right: 0; bottom: 0; を削除 */
-            /* height: 100vh; も削除してコンテンツの高さに合わせる */
+            grid-template-columns: repeat(4, 1fr);  /* 4つのカラムを均等に配置 */
+            grid-gap: 5px;  /* 画像同士の間隔 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 1;  /* 背景として表示 */
             opacity: 0.4;  /* 少し透過させて文字を見やすくする */
-            padding-top: 20px; /* Happy Birthday! との下に少し空間 */
-            /* overflow: hidden; も削除 */
-            margin-top: 20px; /* 日付の下に少し空間 */
+            padding-top: 120px;  /* 文字部分に被らないように上部に余白を作る */
+            height: 100vh; /* 高さを画面いっぱいに設定 */
+            overflow: hidden; /* グリッド内でのスクロールを防止 */
         }
 
         .image-grid img {
@@ -68,27 +72,19 @@
             object-fit: cover; /* 画像が歪まないように調整 */
         }
 
-        /* バルーン、コンフェッティ、ギフトコンテナは画面に固定 */
-        .balloon, .confetti-container, .gift-container {
-            position: fixed; /* 画面に固定 */
-            width: 100%;
-            height: 100vh; /* 常に画面いっぱいに表示 */
-            top: 0;
-            left: 0;
-            pointer-events: none; /* 下の要素をクリックできるように */
-        }
-
         /* バルーンのアニメーション */
         .balloon {
+            position: absolute;
+            width: 100px;
+            height: 150px;
             background: url('balloon.png') no-repeat center center;
             background-size: contain;
-            animation: float 10s ease-in-out infinite;
+            animation: float 10s ease-in-out infinite; /* ゆっくり浮遊するように調整 */
             opacity: 0.9;
-            z-index: 3; /* バルーンを前面に */
-            width: 100px; /* バルーンのサイズは固定 */
-            height: 150px;
+            z-index: 3; /* バルーンを最前面に */
         }
 
+        /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
             0% { transform: translateY(0vh) translateX(0px); opacity: 0.8; }
             25% { transform: translateY(-20vh) translateX(100px); opacity: 0.9; }
@@ -99,15 +95,23 @@
 
         /* コンフェッティ（紙吹雪）のアニメーション */
         .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none; /* コンフェッティの下の要素をクリックできるように */
             z-index: 4; /* コンフェッティをバルーンより前面に */
         }
+
         .confetti {
             position: absolute;
-            width: 8px;
+            width: 8px; /* サイズを少し小さく */
             height: 8px;
-            background-color: #ffad33;
+            background-color: #ffad33; /* デフォルトの色 */
             animation: confettiFall var(--duration) linear infinite;
-            border-radius: 50%;
+            border-radius: 50%; /* 丸いコンフェッティ */
             opacity: 0.8;
         }
 
@@ -116,15 +120,23 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* ギフトボックスのアニメーション */
+        /* Gift Box Animation */
         .gift-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
             z-index: 2; /* バルーンやコンフェッティの下、背景画像の上 */
         }
+
         .gift {
             position: absolute;
-            width: 60px;
+            width: 60px; /* ギフトのサイズ */
             height: 60px;
-            background: url('gift-box.png') no-repeat center center;
+            background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像 */
             background-size: contain;
             animation: giftFloat var(--duration) ease-in-out infinite;
             opacity: 0.9;
@@ -138,28 +150,34 @@
             100% { bottom: 100vh; transform: translateX(0px); opacity: 0.8; }
         }
 
-        /* ページ下部のメッセージ */
-        .bottom-message {
-            position: relative; /* スクロール可能にするためrelativeに変更 */
-            margin-top: 50px; /* 上のコンテンツからの余白 */
-            padding-bottom: 50px; /* ページ下部からの余白を増やす */
-            width: 80%; /* 幅を広げてテキストが収まりやすくする */
-            max-width: 600px; /* 最大幅を設定 */
+        /* ポップアップメッセージのスタイル */
+        .popup {
+            position: fixed; /* 画面中央に固定 */
+            top: 65%; /* 以前の30%から65%に移動 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 40px;
+            border-radius: 15px;
             font-size: 2em; /* 大きめのフォント */
             color: #ff5733;
-            z-index: 5; /* 他の要素より手前に */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            line-height: 1.3; /* 行間を調整 */
-            text-align: center; /* 中央揃え */
-            margin-left: auto; /* 中央揃えのために必要 */
-            margin-right: auto; /* 中央揃えのために必要 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            display: none; /* 初期状態では非表示 */
+            z-index: 10; /* 最前面に表示 */
+            animation: popupAppear 0.5s ease-out forwards; /* ポップアップアニメーション */
+            width: 70%; /* 例: 画面幅の70%にする */
+            max-width: 800px; /* 最大幅を設定して大きくなりすぎないようにする */
+            box-sizing: border-box; /* paddingを含めて幅を計算 */
+        }
+
+        @keyframes popupAppear {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
-
-    <div class="date">2025.06.18</div>
-    <h1>Happy Birthday!</h1>
 
     <div class="image-grid">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -188,6 +206,9 @@
         <img src="sample-image.JPG" alt="サンプル画像">
     </div>
 
+    <div class="date">2025.06.18</div>
+    <h1>Happy Birthday!</h1>
+
     <div class="balloon" style="left: 5%; animation-delay: 0s;"></div>
     <div class="balloon" style="left: 20%; animation-delay: 1.5s;"></div>
     <div class="balloon" style="left: 40%; animation-delay: 3s;"></div>
@@ -200,8 +221,8 @@
 
     <div class="gift-container" id="gift-container"></div>
 
-    <div class="bottom-message">
-        <p>素敵な一年になりますように！🎉<br>たくさんの思い出を</p>
+    <div class="popup" id="birthday-popup">
+        <p>素敵な一年になりますように！🎉<br>たくさんの笑顔と幸せを！</p>
     </div>
 
     <script>
@@ -256,6 +277,14 @@
         for (let i = 0; i < 20; i++) { // ギフトボックスの数を調整
             createGift();
         }
+
+        // ポップアップメッセージを表示するJavaScript
+        window.onload = () => {
+            const popup = document.getElementById('birthday-popup');
+            setTimeout(() => {
+                popup.style.display = 'block';
+            }, 3000); // ページ読み込み後3秒で表示
+        };
     </script>
 </body>
 </html>
