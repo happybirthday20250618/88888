@@ -153,9 +153,9 @@
         /* ポップアップメッセージのスタイル */
         .popup {
             position: fixed; /* 画面中央に固定 */
-            top: 65%; /* 以前の30%から65%に移動 */
+            top: 75%; /* 65%から75%に調整してさらに下に移動 */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* 中央揃えの基準 */
             background-color: rgba(255, 255, 255, 0.95);
             padding: 30px 40px;
             border-radius: 15px;
@@ -165,7 +165,7 @@
             display: none; /* 初期状態では非表示 */
             z-index: 10; /* 最前面に表示 */
             animation: popupAppear 0.5s ease-out forwards; /* ポップアップアニメーション */
-            width: 70%; /* 例: 画面幅の70%にする */
+            width: 70%; /* 画面幅の70%にする */
             max-width: 800px; /* 最大幅を設定して大きくなりすぎないようにする */
             box-sizing: border-box; /* paddingを含めて幅を計算 */
         }
