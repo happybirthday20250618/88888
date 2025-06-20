@@ -7,85 +7,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f8e5d4;  /* 明るいオレンジ色の背景 */
+            background-color: #f8e5d4;  /* フォールバックの背景色 */
             font-family: 'Pacifico', sans-serif;  /* 手書き風フォント */
             text-align: center;
             color: #333;
             margin: 0;
             padding: 0;
             position: relative;
-            overflow: hidden; /* 横スクロールを無効にする */
+            overflow: hidden; /* スクロールを無効にする */
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
+        }
+
+        /* 全画面背景ビデオ/GIFのコンテナ */
+        .background-visual {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* 最背面 */
+            opacity: 0.8; /* 背景の不透明度 */
+        }
+
+        .background-visual video,
+        .background-visual img { /* GIFの場合はimgタグを使用 */
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* 画面全体を覆うように調整 */
         }
 
         h1 {
             color: #ff5733;  /* 鮮やかな赤 */
-            font-size: 4.8em;  /* 少し大きめに */
+            font-size: 5em;  /* さらに大きく */
             margin-top: 20px;
-            animation: bounce 1.5s infinite ease-in-out;
+            animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate; /* glowアニメーションを追加 */
             position: relative;
             z-index: 6;  /* 文字を最前面に表示 */
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); /* 影を強調して立体感を出す */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4); /* 影をさらに強調 */
         }
+
+        /* glowアニメーション */
+        @keyframes glow {
+            from { text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4), 0 0 5px #ff5733; }
+            to { text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.6), 0 0 20px #ffad33; }
+        }
+
 
         /* 2025.06.18の日付 */
         .date {
             color: #ffad33;  /* 明るい黄色 */
-            font-size: 4.2em;  /* Happy Birthday! と同じくらい大きく */
+            font-size: 4.5em;  /* さらに大きく */
             margin-bottom: 20px;
-            animation: bounce 2s infinite ease-in-out;
+            animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards; /* フェードインスケールアニメーションを追加 */
             position: relative;
-            z-index: 6;  /* 文字を画像より前面に表示 */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            z-index: 6;  /* 文字を背景より前面に表示 */
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* フェードインスケールアニメーション */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* テキストの跳ねるアニメーション */
         @keyframes bounce {
             0% { transform: translateY(0); }
-            25% { transform: translateY(-18px); } /* 少し大きく跳ねる */
+            25% { transform: translateY(-20px); } /* 少し大きく跳ねる */
             50% { transform: translateY(0); }
-            75% { transform: translateY(-18px); }
+            75% { transform: translateY(-20px); }
             100% { transform: translateY(0); }
-        }
-
-        /* 画像を小さく並べる */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);  /* 4つのカラムを均等に配置 */
-            grid-gap: 5px;  /* 画像同士の間隔 */
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;  /* 背景として表示 */
-            opacity: 0.6;  /* 透過度を0.4から0.6に上げて、背景の存在感を増す */
-            padding-top: 120px;  /* 文字部分に被らないように上部に余白を作る */
-            height: 100vh; /* 高さを画面いっぱいに設定 */
-            overflow: hidden; /* グリッド内でのスクロールを防止 */
-        }
-
-        .image-grid img {
-            width: 100%;  /* 画像が親要素の幅に合わせて伸縮 */
-            height: auto;  /* 高さは自動で調整 */
-            border-radius: 5px;
-            object-fit: cover; /* 画像が歪まないように調整 */
-            animation: fadeIn 2s ease-out forwards; /* フェードインアニメーションを追加 */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         /* バルーンのアニメーション */
         .balloon {
             position: absolute;
-            width: 120px; /* バルーンを少し大きく */
-            height: 180px; /* バルーンを少し大きく */
+            width: 150px; /* バルーンをさらに大きく */
+            height: 220px; /* バルーンをさらに大きく */
             background: url('balloon.png') no-repeat center center;
             background-size: contain;
-            animation: float 12s ease-in-out infinite; /* ゆっくり浮遊するように調整 */
+            animation: float 15s ease-in-out infinite; /* ゆっくり浮遊するように調整 */
             opacity: 0.9;
             z-index: 3; /* バルーンを最前面に */
         }
@@ -93,9 +101,9 @@
         /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
             0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.8; }
-            25% { transform: translateY(-25vh) translateX(120px) rotate(5deg); opacity: 0.9; }
-            50% { transform: translateY(-50vh) translateX(-120px) rotate(-5deg); opacity: 1; }
-            75% { transform: translateY(-75vh) translateX(60px) rotate(3deg); opacity: 0.9; }
+            25% { transform: translateY(-25vh) translateX(150px) rotate(8deg); opacity: 0.9; }
+            50% { transform: translateY(-50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
+            75% { transform: translateY(-75vh) translateX(75px) rotate(4deg); opacity: 0.9; }
             100% { transform: translateY(-100vh) translateX(0px) rotate(0deg); opacity: 0.8; }
         }
 
@@ -113,18 +121,18 @@
 
         .confetti {
             position: absolute;
-            width: 10px; /* サイズを少し大きく */
-            height: 10px;
+            width: 12px; /* サイズをさらに大きく */
+            height: 12px;
             background-color: #ffad33; /* デフォルトの色 */
             animation: confettiFall var(--duration) linear infinite;
             border-radius: 50%; /* 丸いコンフェッティ */
-            opacity: 0.9; /* 不透明度を少し上げる */
+            opacity: 0.9; /* 不透明度を上げる */
             transform: rotate(var(--rotation-deg)); /* 回転アニメーションの準備 */
         }
 
         @keyframes confettiFall {
             0% { transform: translateY(-100vh) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(720deg); } /* 落ちながら回転 */
+            100% { transform: translateY(100vh) rotate(1080deg); } /* 落ちながらさらに大きく回転 */
         }
 
         /* Gift Box Animation */
@@ -136,13 +144,13 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 2; /* バルーンやコンフェッティの下、背景画像の上 */
+            z-index: 2; /* バルーンやコンフェッティの下、背景視覚要素の上 */
         }
 
         .gift {
             position: absolute;
-            width: 70px; /* ギフトのサイズを少し大きく */
-            height: 70px;
+            width: 80px; /* ギフトのサイズをさらに大きく */
+            height: 80px;
             background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像 */
             background-size: contain;
             animation: giftFloat var(--duration) ease-in-out infinite;
@@ -151,72 +159,74 @@
 
         @keyframes giftFloat {
             0% { bottom: -100px; transform: translateX(0px) scale(0.8); opacity: 0.8; }
-            25% { bottom: 25%; transform: translateX(60px) scale(1); opacity: 0.9; }
-            50% { bottom: 50%; transform: translateX(-60px) scale(1.1); opacity: 1; }
-            75% { bottom: 75%; transform: translateX(30px) scale(1); opacity: 0.9; }
+            25% { bottom: 25%; transform: translateX(70px) scale(1.1); opacity: 0.9; }
+            50% { bottom: 50%; transform: translateX(-70px) scale(1.2); opacity: 1; }
+            75% { bottom: 75%; transform: translateX(40px) scale(1.1); opacity: 0.9; }
             100% { bottom: 100vh; transform: translateX(0px) scale(0.8); opacity: 0.8; }
         }
 
         /* ポップアップメッセージのスタイル */
+        .popup-overlay { /* ポップアップ時の背景オーバーレイ */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* 半透明の黒 */
+            z-index: 9; /* ポップアップの下 */
+            display: none; /* 初期状態では非表示 */
+        }
+
         .popup {
             position: fixed; /* 画面中央に固定 */
             top: 80%; /* ポップアップの位置 */
             left: 50%;
             transform: translate(-50%, -50%); /* 中央揃えの基準 */
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 20px 30px; /* パディングを小さくして枠を縮小 */
-            border-radius: 15px;
-            font-size: 1.6em; /* 文字サイズを小さく */
+            background-color: rgba(255, 255, 255, 0.98); /* 不透明度を上げる */
+            padding: 25px 35px; /* パディングを調整 */
+            border-radius: 20px; /* 角をさらに丸く */
+            font-size: 1.8em; /* 文字サイズを少し大きく */
             color: #ff5733;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* 影を強調 */
             display: none; /* 初期状態では非表示 */
             z-index: 10; /* 最前面に表示 */
-            animation: popupAppear 0.5s ease-out forwards; /* ポップアップアニメーション */
+            animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* 弾むようなアニメーション */
             width: auto; /* コンテンツに合わせて幅を自動調整 */
-            max-width: 500px; /* 最大幅を設定して大きくなりすぎないようにする */
+            max-width: 550px; /* 最大幅を少し大きく */
             white-space: nowrap; /* テキストが1行に収まるようにする */
             box-sizing: border-box; /* paddingを含めて幅を計算 */
         }
         /* ポップアップ内のpタグの余白を調整 */
         .popup p {
             margin: 0;
+            font-weight: bold; /* 少し太く */
         }
 
-
-        @keyframes popupAppear {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        /* パーティクルのスタイル */
+        .particle {
+            position: absolute;
+            background-color: #ffd700; /* ゴールド */
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat var(--duration) linear infinite;
         }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="image-grid">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
+    <div class="background-visual">
+        <video autoplay muted loop playsinline>
+            <source src="background-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
 
     <div class="date">2025.06.18</div>
@@ -234,6 +244,8 @@
 
     <div class="gift-container" id="gift-container"></div>
 
+    <div class="popup-overlay" id="popup-overlay"></div>
+
     <div class="popup" id="birthday-popup">
         <p>素敵な人生になりますように！🎉</p>
     </div>
@@ -241,16 +253,16 @@
     <script>
         // コンフェッティを動的に生成するJavaScript
         const confettiContainer = document.getElementById('confetti-container');
-        const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0']; // カラフルなコンフェッティ
+        const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0']; // カラフルなコンフェッティを増やす
 
         function createConfetti() {
             const confetti = document.createElement('div');
             confetti.classList.add('confetti');
             confetti.style.left = Math.random() * 100 + 'vw';
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5秒のランダムな時間
+            confetti.style.animationDuration = (Math.random() * 3 + 4) + 's'; // 4-7秒のランダムな時間
             confetti.style.animationDelay = (Math.random() * 5) + 's'; // 0-5秒のランダムな遅延
-            confetti.style.width = (Math.random() * 5 + 5) + 'px'; // 5-10pxのランダムなサイズ
+            confetti.style.width = (Math.random() * 7 + 8) + 'px'; // 8-15pxのランダムなサイズ
             confetti.style.height = confetti.style.width; // 正方形にする
             // コンフェッティにランダムな初期回転を追加
             confetti.style.setProperty('--rotation-deg', `${Math.random() * 360}deg`);
@@ -264,7 +276,7 @@
         }
 
         // 多数のコンフェッティを生成
-        for (let i = 0; i < 200; i++) { // コンフェッティの数をさらに増やす
+        for (let i = 0; i < 300; i++) { // コンフェッティの数をさらに増やす
             createConfetti();
         }
 
@@ -277,8 +289,8 @@
             gift.classList.add('gift');
             gift.style.left = Math.random() * 100 + 'vw';
             gift.style.backgroundImage = `url(${giftImages[Math.floor(Math.random() * giftImages.length)]})`;
-            gift.style.animationDuration = (Math.random() * 5 + 7) + 's'; // 7-12秒のランダムな時間
-            gift.style.animationDelay = (Math.random() * 8) + 's'; // 0-8秒のランダムな遅延
+            gift.style.animationDuration = (Math.random() * 6 + 8) + 's'; // 8-14秒のランダムな時間
+            gift.style.animationDelay = (Math.random() * 10) + 's'; // 0-10秒のランダムな遅延
             giftContainer.appendChild(gift);
 
             // 画面外に出たら削除して新しいものを生成
@@ -289,14 +301,42 @@
         }
 
         // 多数のギフトボックスを生成
-        for (let i = 0; i < 30; i++) { // ギフトボックスの数を調整
+        for (let i = 0; i < 40; i++) { // ギフトボックスの数を調整
             createGift();
         }
+
+        // パーティクルを動的に生成するJavaScript
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 3 + 2; // 2pxから5px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.bottom = `${Math.random() * 100}vh`; // 画面下部からスタート
+            particle.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5-10秒
+            particle.style.animationDelay = `${Math.random() * 3}s`; // 0-3秒の遅延
+            document.body.appendChild(particle);
+
+            // 画面外に出たら削除して新しいものを生成
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+                createParticle();
+            });
+        }
+
+        // 多数のパーティクルを生成
+        for (let i = 0; i < 80; i++) {
+            createParticle();
+        }
+
 
         // ポップアップメッセージを表示するJavaScript
         window.onload = () => {
             const popup = document.getElementById('birthday-popup');
+            const overlay = document.getElementById('popup-overlay');
             setTimeout(() => {
+                overlay.style.display = 'block'; // オーバーレイを表示
                 popup.style.display = 'block';
             }, 3000); // ページ読み込み後3秒で表示
         };
