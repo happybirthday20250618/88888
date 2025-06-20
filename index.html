@@ -68,12 +68,13 @@
         /* GIFの表示位置 */
         .gif-container {
             position: fixed; /* 固定位置で常に表示 */
-            bottom: 0; /* ページ下部に配置 */
+            bottom: 50px; /* ページ下部から少し上げる */
             left: 50%;
             transform: translateX(-50%);
             z-index: 0; /* 背景に表示 */
             width: 100%;
             max-width: 600px; /* 最大幅を600pxに設定 */
+            margin-top: 20px;
         }
 
         /* 背景用の透過設定 */
@@ -115,6 +116,15 @@
         <div class="tenor-gif-embed" data-postid="1684604128538204117" data-share-method="host" data-aspect-ratio="1" data-width="100%">
             <a href="https://tenor.com/view/pikapikapika-gif-1684604128538204117">Pikapikapika Sticker</a>
             from <a href="https://tenor.com/search/pikapikapika-stickers">Pikapikapika Stickers</a>
+        </div>
+        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    </div>
+
+    <!-- 2つ目のTenorのGIFを追加 -->
+    <div class="gif-container" style="bottom: 100px;">
+        <div class="tenor-gif-embed" data-postid="16971890" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+            <a href="https://tenor.com/view/party-balloons-celebrate-gif-16971890">Party Balloons Sticker</a>
+            from <a href="https://tenor.com/search/party-stickers">Party Stickers</a>
         </div>
         <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
     </div>
