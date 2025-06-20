@@ -98,14 +98,14 @@
             z-index: 3;
         }
 
-        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外にさらに調整 */
+        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外のさらに下に調整 */
         @keyframes float {
-            0% { transform: translateY(120vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
+            0% { transform: translateY(150vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに下から開始、最初は完全に透明 */
             5% { opacity: 0.8; } /* 少し上がって見えるようになる */
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-120vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面上部外へさらに移動、最後は完全に透明 */
+            100% { transform: translateY(-150vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -183,7 +183,7 @@
 
         .popup {
             position: fixed;
-            top: 75%; /* 中央よりさらに下に調整 */
+            top: 80%; /* 中央よりさらに下に調整 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -357,8 +357,8 @@
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
-            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            balloon.style.animationDelay = (Math.random() * 10) + 's';
+            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // アニメーション速度を少し調整
+            balloon.style.animationDelay = (Math.random() * 10) + 's'; // 開始までの遅延を調整
             document.body.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
@@ -424,10 +424,3 @@
             // エフェクトの生成を開始
             for (let i = 0; i < 300; i++) { createConfetti(); }
             for (let i = 0; i < 20; i++) { createBalloon(); }
-            for (let i = 0; i < 40; i++) { createGift(); }
-            for (let i = 0; i < 80; i++) { createParticle(); }
-
-        });
-    </script>
-</body>
-</html>
