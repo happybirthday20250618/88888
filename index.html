@@ -98,7 +98,7 @@
             display: none; /* 初期状態では非表示 */
         }
 
-        /* バルーンのアニメーション */
+        /* バルーンの共通スタイル */
         .balloon {
             position: absolute;
             width: 150px;
@@ -108,21 +108,18 @@
             background-size: contain;
             bottom: -220px; /* ここで風船を画面外の最下部に配置 */
             opacity: 0.9;
-            /* animationはJSで個別に設定するため、ここでは初期値を残す */
-            /* animation: float 15s ease-in-out infinite; */
+            animation: float var(--duration) ease-in-out var(--delay) infinite; /* CSS変数を使う */
         }
 
         /* 風船の浮遊アニメーション */
-        /* translateXの値をランダムにするため、JSでkeyframesを動的に生成します */
-        /* ここは元の定義を残しますが、JSで上書きされることを想定します */
         @keyframes float {
-            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.0; }
+            0% { transform: translateY(0vh) translateX(var(--start-x)) rotate(0deg); opacity: 0.0; }
             5% { opacity: 0.5; }
-            25% { transform: translateY(-75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
-            50% { transform: translateY(-120vh) translateX(-150px) rotate(-8deg); opacity: 1; }
-            75% { transform: translateY(-180vh) translateX(75px) rotate(4deg); opacity: 0.9; }
+            25% { transform: translateY(-75vh) translateX(var(--mid-x1)) rotate(8deg); opacity: 0.9; }
+            50% { transform: translateY(-120vh) translateX(var(--mid-x2)) rotate(-8deg); opacity: 1; }
+            75% { transform: translateY(-180vh) translateX(var(--end-x)) rotate(4deg); opacity: 0.9; }
             85% { opacity: 0.0; }
-            100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; }
+            100% { transform: translateY(-250vh) translateX(var(--start-x)) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -351,7 +348,6 @@
         const imageGrid = document.getElementById('image-grid');
 
         const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0'];
-        // ここにballoon1.pngを含む画像ファイル名が正しく記述されています
         const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; 
         const giftImages = ['gift-box.png'];
 
@@ -376,50 +372,33 @@
         function createBalloon() {
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
+            
+            // CSS変数を設定してランダムな横方向の動きを制御
+            const startX = Math.floor(Math.random() * 100) - 50; // -50% から 50%
+            const midX1 = Math.floor(Math.random() * 100) - 50;
+            const midX2 = Math.floor(Math.random() * 100) - 50;
+            const endX = Math.floor(Math.random() * 100) - 50;
+
+            balloon.style.setProperty('--start-x', `${startX}vw`); // vw単位で設定
+            balloon.style.setProperty('--mid-x1', `${midX1}vw`);
+            balloon.style.setProperty('--mid-x2', `${midX2}vw`);
+            balloon.style.setProperty('--end-x', `${endX}vw`);
+            
+            // 初期位置をランダムにする (左端から右端まで)
             balloon.style.left = Math.random() * 100 + 'vw';
+
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             
             const duration = Math.random() * 10 + 10; // 10秒から20秒の範囲
             const delay = Math.random() * 10; // 0秒から10秒の範囲
 
-            // ランダムな横方向の動きを定義
-            // translateX の値を -300px から 300px の間でランダムに設定
-            const startX = (Math.random() - 0.5) * 600; // -300 から 300
-            const midX1 = (Math.random() - 0.5) * 600;
-            const midX2 = (Math.random() - 0.5) * 600;
-            const endX = (Math.random() - 0.5) * 600;
-
-            // 動的にキーフレームを生成
-            const styleSheet = document.styleSheets[0];
-            const animationName = `float-${Math.random().toString(36).substring(7)}`; // ユニークなアニメーション名を生成
-            
-            const keyframes = `
-                @keyframes ${animationName} {
-                    0% { transform: translateY(0vh) translateX(${startX}px) rotate(0deg); opacity: 0.0; }
-                    5% { opacity: 0.5; }
-                    25% { transform: translateY(-75vh) translateX(${midX1}px) rotate(8deg); opacity: 0.9; }
-                    50% { transform: translateY(-120vh) translateX(${midX2}px) rotate(-8deg); opacity: 1; }
-                    75% { transform: translateY(-180vh) translateX(${endX}px) rotate(4deg); opacity: 0.9; }
-                    85% { opacity: 0.0; }
-                    100% { transform: translateY(-250vh) translateX(${startX}px) rotate(0deg); opacity: 0.0; }
-                }
-            `;
-            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-
-            balloon.style.animation = `${animationName} ${duration}s ease-in-out ${delay}s infinite`;
+            balloon.style.setProperty('--duration', `${duration}s`);
+            balloon.style.setProperty('--delay', `${delay}s`);
 
             balloonContainer.appendChild(balloon);
 
-            // アニメーション終了時に要素とスタイルルールを削除してメモリリークを防ぐ
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
-                // 関連する@keyframesルールも削除（オプションだが、大量生成の場合は推奨）
-                for (let i = 0; i < styleSheet.cssRules.length; i++) {
-                    if (styleSheet.cssRules[i].name === animationName) {
-                        styleSheet.deleteRule(i);
-                        break;
-                    }
-                }
                 createBalloon();
             });
         }
