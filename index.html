@@ -23,7 +23,7 @@
             font-size: 4em;  /* 少し大きめに */
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
-            z-index: 3; /* 文字がGIFより前に表示されるように */
+            z-index: 2; /* 文字がGIFより前に表示されるように */
             position: relative;
         }
 
@@ -32,7 +32,7 @@
             font-size: 3em;  /* Happy Birthday! と同じくらい大きく */
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
-            z-index: 2;
+            z-index: 1;
             position: relative;
         }
 
@@ -67,13 +67,20 @@
 
         /* GIFの表示位置 */
         .gif-container {
-            position: absolute;
+            position: fixed; /* 固定位置で常に表示 */
             bottom: 0; /* ページ下部に配置 */
             left: 50%;
             transform: translateX(-50%);
             z-index: 0; /* 背景に表示 */
             width: 100%;
             max-width: 600px; /* 最大幅を600pxに設定 */
+        }
+
+        /* 背景用の透過設定 */
+        .gif-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
         }
 
     </style>
