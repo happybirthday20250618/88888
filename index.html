@@ -24,6 +24,8 @@
             font-size: 4em;  /* 少し大きめに */
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
+            position: relative;
+            z-index: 2;  /* 文字を画像より前面に表示 */
         }
 
         /* 2025.06.18の日付 */
@@ -32,6 +34,8 @@
             font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
+            position: relative;
+            z-index: 2;  /* 文字を画像より前面に表示 */
         }
 
         /* テキストの跳ねるアニメーション */
@@ -43,18 +47,18 @@
             100% { transform: translateY(0); }
         }
 
-        img {
-            width: 70%;  /* 画像のサイズ調整 */
-            margin-top: 20px;
-            border-radius: 10px;  /* 画像の角を丸くする */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* 影を追加 */
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        /* 画像がフェードインするアニメーション */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        /* 画像がタイル状に背景として表示 */
+        .image-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('sample-image.JPG');
+            background-size: cover;
+            background-repeat: repeat;
+            z-index: 1;  /* 背景として表示 */
+            opacity: 0.7;  /* 少し透過させて文字を見やすくする */
         }
 
         /* バルーンのアニメーション */
@@ -109,12 +113,11 @@
 </head>
 <body>
 
+    <!-- 画像背景 -->
+    <div class="image-background"></div>
+
     <div class="date">2025.06.18</div>
     <h1>Happy Birthday!</h1>
-
-    <!-- 画像表示 -->
-    <!-- 画像がリポジトリのルートにある場合 -->
-    <img src="sample-image.JPG" alt="サンプル画像">
 
     <!-- バルーン -->
     <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
@@ -149,4 +152,3 @@
 
 </body>
 </html>
-
