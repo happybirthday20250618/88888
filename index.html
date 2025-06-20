@@ -24,7 +24,7 @@
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
             position: relative;
-            z-index: 2; /* 文字を画像より前面に表示 */
+            z-index: 6; /* 文字を最前面に表示 */
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 影で立体感を出す */
         }
 
@@ -34,7 +34,7 @@
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
             position: relative;
-            z-index: 2;
+            z-index: 6;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -48,7 +48,8 @@
 
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 画像サイズを少し小さくして数を増やす */
+            /* ここを修正: 4つのカラムを均等に配置 */
+            grid-template-columns: repeat(4, 1fr);
             grid-gap: 5px;
             position: absolute;
             top: 0;
@@ -58,12 +59,14 @@
             z-index: 1;
             opacity: 0.4; /* さらに透過させて文字を目立たせる */
             padding-top: 120px;
-            height: 100vh;
+            /* grid-auto-rows: minmax(0, 1fr); を削除または調整して、行の高さがコンテンツに依存するようにするか、固定します */
+            height: 100vh; /* グリッドの高さを画面いっぱいに */
             overflow: hidden; /* グリッド内でのスクロールを防止 */
         }
 
         .image-grid img {
             width: 100%;
+            /* 高さを自動調整してアスペクト比を維持。または固定高さを設定して object-fit を使用 */
             height: auto;
             border-radius: 5px;
             object-fit: cover; /* 画像が歪まないように調整 */
@@ -77,7 +80,7 @@
             background-size: contain;
             animation: float 10s ease-in-out infinite; /* ゆっくり浮遊するように調整 */
             opacity: 0.9;
-            z-index: 3; /* バルーンを最前面に */
+            z-index: 3; /* バルーンを前面に */
         }
 
         @keyframes float {
@@ -110,7 +113,42 @@
             opacity: 0.8;
         }
 
-        /* ポップアップメッセージのスタイル */
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Gift Box Animation */
+        .gift-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 2; /* バルーンやコンフェッティの下、背景画像の上 */
+        }
+
+        .gift {
+            position: absolute;
+            width: 60px; /* ギフトのサイズ */
+            height: 60px;
+            background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像 */
+            background-size: contain;
+            animation: giftFloat var(--duration) ease-in-out infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes giftFloat {
+            0% { bottom: -100px; transform: translateX(0px); opacity: 0.8; }
+            25% { bottom: 20%; transform: translateX(50px); opacity: 0.9; }
+            50% { bottom: 40%; transform: translateX(-50px); opacity: 1; }
+            75% { bottom: 60%; transform: translateX(20px); opacity: 0.9; }
+            100% { bottom: 100vh; transform: translateX(0px); opacity: 0.8; }
+        }
+
+        /* Pop-up Message */
         .popup {
             position: fixed; /* 画面中央に固定 */
             top: 50%;
@@ -132,6 +170,17 @@
             80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
+
+        /* Footer Message */
+        .footer-message {
+            position: absolute;
+            bottom: 20px; /* 画面下からの距離 */
+            width: 100%;
+            font-size: 1.5em;
+            color: #777; /* やや落ち着いた色 */
+            z-index: 5; /* 他の要素より手前に */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -141,43 +190,27 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
+
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
+
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
+
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
+
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        </div>
+    </div>
 
     <div class="date">2025.06.18</div>
     <h1>Happy Birthday!</h1>
@@ -192,8 +225,14 @@
 
     <div class="confetti-container" id="confetti-container"></div>
 
+    <div class="gift-container" id="gift-container"></div>
+
     <div class="popup" id="birthday-popup">
         <p>素敵な一年になりますように！🎉</p>
+    </div>
+
+    <div class="footer-message">
+        <p>たくさんの愛を込めて</p>
     </div>
 
     <script>
@@ -222,6 +261,31 @@
         // 多数のコンフェッティを生成
         for (let i = 0; i < 150; i++) { // コンフェッティの数を増やす
             createConfetti();
+        }
+
+        // ギフトボックスを動的に生成するJavaScript
+        const giftContainer = document.getElementById('gift-container');
+        const giftImages = ['gift-box.png']; // 複数種類ある場合はここに追加
+
+        function createGift() {
+            const gift = document.createElement('div');
+            gift.classList.add('gift');
+            gift.style.left = Math.random() * 100 + 'vw';
+            gift.style.backgroundImage = `url(${giftImages[Math.floor(Math.random() * giftImages.length)]})`;
+            gift.style.animationDuration = (Math.random() * 5 + 7) + 's'; // 7-12秒のランダムな時間
+            gift.style.animationDelay = (Math.random() * 8) + 's'; // 0-8秒のランダムな遅延
+            giftContainer.appendChild(gift);
+
+            // 画面外に出たら削除して新しいものを生成
+            gift.addEventListener('animationend', () => {
+                gift.remove();
+                createGift();
+            });
+        }
+
+        // 多数のギフトボックスを生成
+        for (let i = 0; i < 20; i++) { // ギフトボックスの数を調整
+            createGift();
         }
 
         // ポップアップメッセージを表示するJavaScript
