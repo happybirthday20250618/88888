@@ -7,30 +7,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f8e5d4; /* 明るいオレンジ色の背景 */
-            font-family: 'Pacifico', sans-serif; /* 手書き風フォント */
+            background-color: #f8e5d4;  /* 明るいオレンジ色の背景 */
+            font-family: 'Pacifico', sans-serif;  /* 手書き風フォント */
             text-align: center;
             color: #333;
             margin: 0;
             padding: 0;
             position: relative;
-            overflow: hidden; /* 横スクロールと縦スクロールを無効にする */
-            min-height: 100vh;
+            /* overflow: hidden を削除してスクロールを有効にする */
+            min-height: 100vh; /* 最小高さを確保 */
         }
 
         h1 {
-            color: #ff5733; /* 鮮やかな赤 */
-            font-size: 4.5em; /* 少し大きめに */
+            color: #ff5733;  /* 鮮やかな赤 */
+            font-size: 4.5em;  /* 少し大きめに */
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
             position: relative;
-            z-index: 6; /* 文字を最前面に表示 */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 影で立体感を出す */
+            z-index: 6;  /* 文字を最前面に表示 */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);  /* 影で立体感を出す */
         }
 
         .date {
-            color: #ffad33; /* 明るい黄色 */
-            font-size: 4em; /* Happy Birthday! と同じくらい大きく */
+            color: #ffad33;  /* 明るい黄色 */
+            font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
             position: relative;
@@ -38,6 +38,7 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        /* テキストの跳ねるアニメーション */
         @keyframes bounce {
             0% { transform: translateY(0); }
             25% { transform: translateY(-15px); } /* 少し大きく跳ねる */
@@ -46,38 +47,46 @@
             100% { transform: translateY(0); }
         }
 
+        /* 画像を小さく並べるグリッド */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr); /* 4つのカラムを均等に配置 */
             grid-gap: 5px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-            opacity: 0.4; /* さらに透過させて文字を目立たせる */
-            padding-top: 120px;
-            height: 100vh; /* グリッドの高さを画面いっぱいに設定 */
-            overflow: hidden; /* グリッド内でのスクロールを防止 */
+            /* position: absolute; top: 0; left: 0; right: 0; bottom: 0; を削除 */
+            /* height: 100vh; も削除してコンテンツの高さに合わせる */
+            z-index: 1;  /* 背景として表示 */
+            opacity: 0.4;  /* 少し透過させて文字を見やすくする */
+            padding-top: 20px; /* Happy Birthday! との下に少し空間 */
+            /* overflow: hidden; も削除 */
+            margin-top: 20px; /* 日付の下に少し空間 */
         }
 
         .image-grid img {
-            width: 100%;
-            height: auto;
+            width: 100%;  /* 画像が親要素の幅に合わせて伸縮 */
+            height: auto;  /* 高さは自動で調整 */
             border-radius: 5px;
             object-fit: cover; /* 画像が歪まないように調整 */
         }
 
+        /* バルーン、コンフェッティ、ギフトコンテナは画面に固定 */
+        .balloon, .confetti-container, .gift-container {
+            position: fixed; /* 画面に固定 */
+            width: 100%;
+            height: 100vh; /* 常に画面いっぱいに表示 */
+            top: 0;
+            left: 0;
+            pointer-events: none; /* 下の要素をクリックできるように */
+        }
+
+        /* バルーンのアニメーション */
         .balloon {
-            position: absolute;
-            width: 100px;
-            height: 150px;
             background: url('balloon.png') no-repeat center center;
             background-size: contain;
-            animation: float 10s ease-in-out infinite; /* ゆっくり浮遊するように調整 */
+            animation: float 10s ease-in-out infinite;
             opacity: 0.9;
             z-index: 3; /* バルーンを前面に */
+            width: 100px; /* バルーンのサイズは固定 */
+            height: 150px;
         }
 
         @keyframes float {
@@ -88,25 +97,17 @@
             100% { transform: translateY(-100vh) translateX(0px); opacity: 0.8; }
         }
 
-        /* Confetti */
+        /* コンフェッティ（紙吹雪）のアニメーション */
         .confetti-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none; /* コンフェッティの下の要素をクリックできるように */
             z-index: 4; /* コンフェッティをバルーンより前面に */
         }
-
         .confetti {
             position: absolute;
-            width: 8px; /* サイズを少し小さく */
+            width: 8px;
             height: 8px;
-            background-color: #ffad33; /* デフォルトの色 */
+            background-color: #ffad33;
             animation: confettiFall var(--duration) linear infinite;
-            border-radius: 50%; /* 丸いコンフェッティ */
+            border-radius: 50%;
             opacity: 0.8;
         }
 
@@ -115,23 +116,15 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* Gift Box Animation */
+        /* ギフトボックスのアニメーション */
         .gift-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
             z-index: 2; /* バルーンやコンフェッティの下、背景画像の上 */
         }
-
         .gift {
             position: absolute;
-            width: 60px; /* ギフトのサイズ */
+            width: 60px;
             height: 60px;
-            background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像 */
+            background: url('gift-box.png') no-repeat center center;
             background-size: contain;
             animation: giftFloat var(--duration) ease-in-out infinite;
             opacity: 0.9;
@@ -145,24 +138,28 @@
             100% { bottom: 100vh; transform: translateX(0px); opacity: 0.8; }
         }
 
-        /* Birthday Message at the bottom */
+        /* ページ下部のメッセージ */
         .bottom-message {
-            position: absolute; /* ページ下部に絶対配置 */
-            bottom: 50px; /* 下からの距離 */
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative; /* スクロール可能にするためrelativeに変更 */
+            margin-top: 50px; /* 上のコンテンツからの余白 */
+            padding-bottom: 50px; /* ページ下部からの余白を増やす */
+            width: 80%; /* 幅を広げてテキストが収まりやすくする */
+            max-width: 600px; /* 最大幅を設定 */
             font-size: 2em; /* 大きめのフォント */
             color: #ff5733;
             z-index: 5; /* 他の要素より手前に */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            width: 80%; /* 幅を広げてテキストが収まりやすくする */
-            max-width: 600px; /* 最大幅を設定 */
             line-height: 1.3; /* 行間を調整 */
             text-align: center; /* 中央揃え */
+            margin-left: auto; /* 中央揃えのために必要 */
+            margin-right: auto; /* 中央揃えのために必要 */
         }
     </style>
 </head>
 <body>
+
+    <div class="date">2025.06.18</div>
+    <h1>Happy Birthday!</h1>
 
     <div class="image-grid">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -190,9 +187,6 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
     </div>
-
-    <div class="date">2025.06.18</div>
-    <h1>Happy Birthday!</h1>
 
     <div class="balloon" style="left: 5%; animation-delay: 0s;"></div>
     <div class="balloon" style="left: 20%; animation-delay: 1.5s;"></div>
@@ -244,27 +238,3 @@
 
         function createGift() {
             const gift = document.createElement('div');
-            gift.classList.add('gift');
-            gift.style.left = Math.random() * 100 + 'vw';
-            gift.style.backgroundImage = `url(${giftImages[Math.floor(Math.random() * giftImages.length)]})`;
-            gift.style.animationDuration = (Math.random() * 5 + 7) + 's'; // 7-12秒のランダムな時間
-            gift.style.animationDelay = (Math.random() * 8) + 's'; // 0-8秒のランダムな遅延
-            giftContainer.appendChild(gift);
-
-            // 画面外に出たら削除して新しいものを生成
-            gift.addEventListener('animationend', () => {
-                gift.remove();
-                createGift();
-            });
-        }
-
-        // 多数のギフトボックスを生成
-        for (let i = 0; i < 20; i++) { // ギフトボックスの数を調整
-            createGift();
-        }
-
-        // ポップアップに関するJavaScriptは削除されました。
-        // window.onload でのポップアップ表示処理も削除されました。
-    </script>
-</body>
-</html>
