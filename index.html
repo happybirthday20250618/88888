@@ -118,7 +118,8 @@
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-150vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
+            90% { opacity: 0.0; } /* ここで完全に透明にする */
+            100% { transform: translateY(-180vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動、最後は完全に透明 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -196,7 +197,7 @@
 
         .popup {
             position: fixed;
-            top: 95%; /* ここを95%に調整しました！ */
+            top: 95%; /* ポップアップ位置 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -338,7 +339,7 @@
         const tapMessage = document.getElementById('tap-message');
         const confettiContainer = document.getElementById('confetti-container');
         const giftContainer = document.getElementById('gift-container');
-        const balloonContainer = document.getElementById('balloon-container'); // 新しく追加
+        const balloonContainer = document.getElementById('balloon-container'); 
         const popup = document.getElementById('birthday-popup');
         const overlay = document.getElementById('popup-overlay');
         const imageGrid = document.getElementById('image-grid');
@@ -372,7 +373,7 @@
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
             balloon.style.animationDelay = (Math.random() * 10) + 's';
-            balloonContainer.appendChild(balloon); // bodyではなくballoonContainerに追加
+            balloonContainer.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
