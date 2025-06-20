@@ -14,7 +14,7 @@
             margin: 0;
             padding: 0;
             position: relative;
-            overflow-x: hidden; /* 横スクロールを無効にする */
+            overflow-x: hidden;
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
         }
 
@@ -36,7 +36,6 @@
             z-index: 2;  /* 文字を画像より前面に表示 */
         }
 
-        /* テキストの跳ねるアニメーション */
         @keyframes bounce {
             0% { transform: translateY(0); }
             25% { transform: translateY(-10px); }
@@ -48,22 +47,22 @@
         /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);  /* 1行に4枚 */
-            grid-gap: 5px;  /* 画像同士の間隔 */
+            grid-template-columns: repeat(6, 1fr);  /* 1行に6枚 */
+            grid-gap: 10px;  /* 画像同士の間隔 */
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 1;  /* 背景として表示 */
-            opacity: 0.5;  /* 少し透過させて文字を見やすくする */
-            padding-top: 120px;  /* 文字部分に被らないように上部に余白を作る */
-            height: 100vh; /* 高さを画面いっぱいに設定 */
+            z-index: 1;
+            opacity: 0.5;
+            padding-top: 150px;  /* 文字部分に被らないように上部に余白を作る */
+            height: 100vh;
         }
 
         .image-grid img {
-            width: 100%;  /* 画像が親要素の幅に合わせて伸縮 */
-            height: auto;  /* 高さは自動で調整 */
+            width: 100%;
+            height: auto;
             border-radius: 5px;
         }
 
@@ -101,7 +100,7 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* ポップアップメッセージのスタイル */
+        /* ポップアップメッセージ */
         .popup {
             position: absolute;
             top: 30%;
@@ -114,14 +113,38 @@
             color: #ff5733;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             display: none;
+            z-index: 10;
+        }
+
+        /* スターのアニメーション */
+        .star {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
         }
     </style>
 </head>
 <body>
 
+    <div class="popup" id="popupMessage">
+        🎉🎂 Happy Birthday! 🎂🎉
+    </div>
+
     <!-- 画像が並ぶグリッド -->
     <div class="image-grid">
-        <!-- 画像を20枚に増やして画面全体を埋める -->
+        <!-- 画像を増やして画面全体を埋める -->
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -148,22 +171,10 @@
     <h1>Happy Birthday!</h1>
 
     <!-- バルーン -->
-    <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="balloon" style="left: 30%; animation-delay: 1s;"></div>
-    <div class="balloon" style="left: 50%; animation-delay: 2s;"></div>
-    <div class="balloon" style="left: 70%; animation-delay: 3s;"></div>
-    <div class="balloon" style="left: 90%; animation-delay: 4s;"></div>
-
-    <!-- コンフェッティ（紙吹雪） -->
-    <div class="confetti" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="confetti" style="left: 30%; animation-delay: 1s;"></div>
-    <div class="confetti" style="left: 45%; animation-delay: 2s;"></div>
-    <div class="confetti" style="left: 60%; animation-delay: 3s;"></div>
-    <div class="confetti" style="left: 75%; animation-delay: 4s;"></div>
-    <div class="confetti" style="left: 90%; animation-delay: 5s;"></div>
-    <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
-    <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
-    <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
-
-</body>
-</html>
+    <div class="balloon" style="left: 5%; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 15%; animation-delay: 1s;"></div>
+    <div class="balloon" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 35%; animation-delay: 3s;"></div>
+    <div class="balloon" style="left: 45%; animation-delay: 4s;"></div>
+    <div class="balloon" style="left: 55%; animation-delay: 5s;"></div>
+    <div class="balloon" style="left: 65%; animation-delay: 6s;"></
