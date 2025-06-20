@@ -68,7 +68,7 @@
         /* GIFの表示位置 */
         .gif-container {
             position: fixed; /* 固定位置で常に表示 */
-            bottom: 50px; /* ページ下部から少し上げる */
+            bottom: 80px; /* ページ下部から少し上げる */
             left: 50%;
             transform: translateX(-50%);
             z-index: 0; /* 背景に表示 */
@@ -82,17 +82,6 @@
             width: 100%;
             height: auto;
             border-radius: 5px;
-        }
-
-        /* 2番目のGIFの位置設定 */
-        .gif-container-second {
-            position: fixed; /* 固定位置で表示 */
-            bottom: 100px; /* ページ下部からさらに上げる */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 0; /* 背景に表示 */
-            width: 100%;
-            max-width: 600px; /* 最大幅を600pxに設定 */
         }
 
     </style>
@@ -131,14 +120,11 @@
         <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
     </div>
 
-    <!-- 2つ目のTenorのGIFを追加 -->
-    <div class="gif-container-second">
-        <div class="tenor-gif-embed" data-postid="16971890" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-            <a href="https://tenor.com/view/party-balloons-celebrate-gif-16971890">Party Balloons Sticker</a>
-            from <a href="https://tenor.com/search/party-stickers">Party Stickers</a>
-        </div>
-        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-    </div>
+    <!-- 音楽の追加 -->
+    <audio autoplay loop>
+        <source src="birthday-music.mp3" type="audio/mp3">
+        <p>このブラウザでは音楽を再生できません。</p>
+    </audio>
 
 </body>
 </html>
