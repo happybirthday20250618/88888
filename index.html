@@ -25,11 +25,15 @@
         h1 {
             color: #ff5733;  /* 鮮やかな赤 */
             font-size: 5em;  /* 大きめ */
-            margin-top: 5vh; /* 画面の高さに対する比率で調整 */
+            /* margin-top: 5vh; ← 削除または調整 */
+            margin-top: 10vh; /* 画面上部からの位置を調整 */
             animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate;
-            position: relative;
+            position: absolute; /* 絶対配置にすることで、中央寄せと独立して位置調整 */
+            top: 10vh; /* 画面上部から10%の位置に */
+            left: 50%;
+            transform: translateX(-50%); /* 中央寄せ */
             z-index: 6;  /* 文字を最前面に表示 */
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4); /* 影をさらに強調 */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
             display: none; /* 初期状態では非表示 */
         }
 
@@ -37,9 +41,13 @@
         .date {
             color: #ffad33;  /* 明るい黄色 */
             font-size: 4.5em;  /* 大きめ */
-            margin-bottom: 2vh; /* 画面の高さに対する比率で調整 */
+            /* margin-bottom: 2vh; ← 削除または調整 */
+            margin-top: 25vh; /* h1の下にくるように調整 */
             animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards;
-            position: relative;
+            position: absolute; /* 絶対配置 */
+            top: 25vh; /* h1の下にくるように調整 */
+            left: 50%;
+            transform: translateX(-50%); /* 中央寄せ */
             z-index: 6;  /* 文字を背景より前面に表示 */
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
             display: none; /* 初期状態では非表示 */
@@ -47,36 +55,40 @@
 
         /* テキストの跳ねるアニメーション */
         @keyframes bounce {
-            0% { transform: translateY(0); }
-            25% { transform: translateY(-20px); } /* 少し大きく跳ねる */
-            50% { transform: translateY(0); }
-            75% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
+            0% { transform: translateY(0) translateX(-50%); }
+            25% { transform: translateY(-20px) translateX(-50%); }
+            50% { transform: translateY(0) translateX(-50%); }
+            75% { transform: translateY(-20px) translateX(-50%); }
+            100% { transform: translateY(0) translateX(-50%); }
         }
+        /* bounceアニメーションがtransformを上書きしないよう、個別にtranslateXを追加 */
+        h1 { animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate; }
+        .date { animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards; }
+
 
         /* 画像を小さく並べるグリッド */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);  /* 4つのカラムを均等に配置 */
-            grid-gap: 5px;  /* 画像同士の間隔 */
-            position: absolute; /* 全画面に配置 */
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 5px;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            z-index: 1;  /* 背景として表示 */
-            opacity: 0.6;  /* 透過度を調整 */
-            padding-top: 10vh; /* 文字と被らないように画面の高さに対する余白を設定 */
-            height: 100vh; /* 高さを画面いっぱいに設定 */
-            overflow: hidden; /* グリッド内でのスクロールを防止 */
+            z-index: 1;
+            opacity: 0.6;
+            padding-top: 10vh;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .image-grid img {
-            width: 100%;  /* 画像が親要素の幅に合わせて伸縮 */
-            height: 100%; /* 高さを100%にして、オブジェクトフィットで調整 */
+            width: 100%;
+            height: 100%;
             border-radius: 5px;
-            object-fit: cover; /* 画像が歪まずに、コンテナを覆うように調整 */
-            animation: fadeIn 2s ease-out forwards; /* フェードインアニメーション */
+            object-fit: cover;
+            animation: fadeIn 2s ease-out forwards;
         }
 
         @keyframes fadeIn {
@@ -97,13 +109,13 @@
             z-index: 3;
         }
 
-        /* 風船の浮遊アニメーションをランダム化 */
+        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外に調整 */
         @keyframes float {
-            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.8; }
-            25% { transform: translateY(-25vh) translateX(150px) rotate(8deg); opacity: 0.9; }
-            50% { transform: translateY(-50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
-            75% { transform: translateY(-75vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-100vh) translateX(0px) rotate(0deg); opacity: 0.8; }
+            0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0.8; } /* 画面下端から開始 */
+            25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
+            50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
+            75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
+            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.8; } /* 画面上部外へ消える */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -116,7 +128,7 @@
             overflow: hidden;
             pointer-events: none;
             z-index: 4;
-            display: none; /* 初期状態では非表示 */
+            display: none;
         }
 
         .confetti {
@@ -145,7 +157,7 @@
             overflow: hidden;
             pointer-events: none;
             z-index: 2;
-            display: none; /* 初期状態では非表示 */
+            display: none;
         }
 
         .gift {
@@ -181,7 +193,8 @@
 
         .popup {
             position: fixed;
-            top: 80%;
+            /* top: 80%; ← 変更 */
+            top: 65%; /* 中央より少し下に調整 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -190,7 +203,7 @@
             font-size: 1.2em;
             color: #ff5733;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: none; /* 初期状態では非表示 */
+            display: none;
             z-index: 10;
             animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
             width: auto;
@@ -229,12 +242,12 @@
 
         /* プレゼントボックスのスタイル */
         #present-box {
-            position: relative; /* z-indexを適用するため */
-            width: 250px; /* プレゼントボックスのサイズ */
+            position: relative;
+            width: 250px;
             height: 250px;
-            cursor: pointer; /* クリックできることを示すカーソル */
-            z-index: 7; /* 他の要素より前面に */
-            animation: pulse 1.5s infinite ease-in-out; /* 脈打つようなアニメーション */
+            cursor: pointer;
+            z-index: 7;
+            animation: pulse 1.5s infinite ease-in-out;
             margin-top: -10vh; /* 中央に配置するために少し上に移動 */
         }
 
@@ -299,11 +312,13 @@
     <h1 id="main-title">Happy Birthday!</h1>
 
     <div id="present-box">
-        <img src="gift_box_open.png" alt="プレゼントボックス"> </div>
+        <img src="gift_box_open.png" alt="プレゼントボックス">
+    </div>
     <div id="tap-message">タップして開いてね！</div>
 
     <div class="confetti-container" id="confetti-container"></div>
     <div class="gift-container" id="gift-container"></div>
+
     <div class="popup-overlay" id="popup-overlay"></div>
 
     <div class="popup" id="birthday-popup">
@@ -339,7 +354,7 @@
 
             confetti.addEventListener('animationend', () => {
                 confetti.remove();
-                createConfetti(); // 継続的に生成
+                createConfetti();
             });
         }
 
@@ -354,7 +369,7 @@
 
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
-                createBalloon(); // 継続的に生成
+                createBalloon();
             });
         }
 
@@ -369,7 +384,7 @@
 
             gift.addEventListener('animationend', () => {
                 gift.remove();
-                createGift(); // 継続的に生成
+                createGift();
             });
         }
 
@@ -387,7 +402,7 @@
 
             particle.addEventListener('animationend', () => {
                 particle.remove();
-                createParticle(); // 継続的に生成
+                createParticle();
             });
         }
 
@@ -404,11 +419,13 @@
             // コンテナを表示状態にする
             confettiContainer.style.display = 'block';
             giftContainer.style.display = 'block';
-            // パーティクルとバルーンはbodyに直接追加されるので、コンテナのdisplay制御は不要
 
-            // ポップアップを表示する（これは3秒後に表示されるように残しておきます）
-            overlay.style.display = 'block';
-            popup.style.display = 'block';
+            // ポップアップを表示する（3秒後に表示されるように残しておく）
+            // ポップアップの表示タイミングを調整
+            setTimeout(() => {
+                overlay.style.display = 'block';
+                popup.style.display = 'block';
+            }, 500); // クリック後0.5秒で表示
 
             // エフェクトの生成を開始
             for (let i = 0; i < 300; i++) { createConfetti(); }
@@ -417,9 +434,6 @@
             for (let i = 0; i < 80; i++) { createParticle(); }
 
         });
-
-        // ページロード時はポップアップを表示しない
-        // window.onload の処理を削除しました
     </script>
 </body>
 </html>
