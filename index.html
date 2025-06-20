@@ -68,16 +68,14 @@
         /* GIFの表示位置 */
         .gif-container {
             position: fixed; /* 固定位置で常に表示 */
-            bottom: 80px; /* ページ下部から少し上げる */
+            bottom: 0; /* ページの下部に配置 */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); /* 中央揃え */
             z-index: 0; /* 背景に表示 */
             width: 100%;
             max-width: 600px; /* 最大幅を600pxに設定 */
-            margin-top: 20px;
         }
 
-        /* 背景用の透過設定 */
         .gif-container img {
             width: 100%;
             height: auto;
