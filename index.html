@@ -65,21 +65,13 @@
             border-radius: 5px;
         }
 
-        /* GIFの表示位置 */
-        .gif-container {
-            position: fixed; /* 固定位置で常に表示 */
-            bottom: 0; /* ページの下部に配置 */
+        /* 音楽の追加 */
+        audio {
+            position: fixed;
+            bottom: 10px;
             left: 50%;
-            transform: translateX(-50%); /* 中央揃え */
-            z-index: 0; /* 背景に表示 */
-            width: 100%;
-            max-width: 600px; /* 最大幅を600pxに設定 */
-        }
-
-        .gif-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+            transform: translateX(-50%);
+            z-index: 3;
         }
 
     </style>
@@ -109,15 +101,6 @@
     <!-- 文字部分 -->
     <div class="date">2025.06.18</div>
     <h1>Happy Birthday!</h1>
-
-    <!-- 1つ目のGIFをページ下に追加 -->
-    <div class="gif-container">
-        <div class="tenor-gif-embed" data-postid="1684604128538204117" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-            <a href="https://tenor.com/view/pikapikapika-gif-1684604128538204117">Pikapikapika Sticker</a>
-            from <a href="https://tenor.com/search/pikapikapika-stickers">Pikapikapika Stickers</a>
-        </div>
-        <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-    </div>
 
     <!-- 音楽の追加 -->
     <audio autoplay loop>
