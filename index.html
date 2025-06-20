@@ -183,7 +183,7 @@
 
         .popup {
             position: fixed;
-            top: 80%; /* 中央よりさらに下に調整 */
+            top: 90%; /* ここを90%に調整しました！ */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -357,8 +357,8 @@
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
-            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // アニメーション速度を少し調整
-            balloon.style.animationDelay = (Math.random() * 10) + 's'; // 開始までの遅延を調整
+            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            balloon.style.animationDelay = (Math.random() * 10) + 's';
             document.body.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
