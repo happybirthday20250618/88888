@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday</title>
-    <!-- Google Fontsの手書き風フォントを追加 -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,7 +14,7 @@
             margin: 0;
             padding: 0;
             position: relative;
-            overflow-x: hidden; /* 横スクロールを無効にする */
+            overflow-x: hidden;
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
         }
 
@@ -47,7 +46,7 @@
 
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  /* 100px幅で並べる */
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* 100px幅で並べる */
             grid-gap: 0px;
             position: absolute;
             top: 0;
@@ -56,7 +55,7 @@
             bottom: 0;
             z-index: 1;  /* 背景として表示 */
             opacity: 0.5;  /* 少し透過させて文字を見やすくする */
-            padding-top: 120px;  /* 文字部分に被らないように上部に余白を作る */
+            padding-top: 120px;
             height: 100vh; /* 高さを画面いっぱいに設定 */
         }
 
@@ -159,4 +158,27 @@
     <!-- バルーン -->
     <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
     <div class="balloon" style="left: 30%; animation-delay: 1s;"></div>
-    <div class="balloon
+    <div class="balloon" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="balloon" style="left: 90%; animation-delay: 4s;"></div>
+
+    <!-- コンフェッティ（紙吹雪） -->
+    <div class="confetti" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="confetti" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="confetti" style="left: 45%; animation-delay: 2s;"></div>
+    <div class="confetti" style="left: 60%; animation-delay: 3s;"></div>
+    <div class="confetti" style="left: 75%; animation-delay: 4s;"></div>
+    <div class="confetti" style="left: 90%; animation-delay: 5s;"></div>
+    <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
+    <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
+    <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
+    <div class="confetti" style="left: 55%; animation-delay: 9s;"></div>
+    <div class="confetti" style="left: 70%; animation-delay: 10s;"></div>
+    <div class="confetti" style="left: 85%; animation-delay: 11s;"></div>
+
+    <script>
+        window.onload = function() {
+            document.querySelector('.popup').style.display = 'block';
+            setTimeout(function() {
+                document.querySelector('.popup').style.display = 'none';
+            }, 4000
