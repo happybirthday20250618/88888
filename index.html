@@ -50,8 +50,8 @@
         /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  /* 画像のサイズを調整 */
-            grid-gap: 10px;  /* 画像同士の間隔 */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  /* 自動で複数列に配置 */
+            grid-gap: 5px;  /* 画像同士の間隔 */
             position: absolute;
             top: 0;
             left: 0;
@@ -59,7 +59,8 @@
             bottom: 0;
             z-index: 1;  /* 背景として表示 */
             opacity: 0.5;  /* 少し透過させて文字を見やすくする */
-            padding-top: 150px;  /* 文字部分に被らないように上部に余白を作る */
+            padding-top: 120px;  /* 文字部分に被らないように上部に余白を作る */
+            height: 100vh; /* 高さを画面いっぱいに設定 */
         }
 
         .image-grid img {
@@ -122,6 +123,7 @@
 
     <!-- 画像が並ぶグリッド -->
     <div class="image-grid">
+        <!-- 同じ画像をたくさん並べる -->
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -130,7 +132,19 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
-        <!-- 必要に応じて画像の数を増やしてください -->
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <!-- 必要に応じてもっと画像を追加 -->
     </div>
 
     <div class="date">2025.06.18</div>
@@ -153,19 +167,4 @@
     <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
     <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
     <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
-    <div class="confetti" style="left: 55%; animation-delay: 9s;"></div>
-    <div class="confetti" style="left: 70%; animation-delay: 10s;"></div>
-    <div class="confetti" style="left: 85%; animation-delay: 11s;"></div>
-
-    <script>
-        // ページが読み込まれたときにポップアップを表示
-        window.onload = function() {
-            document.querySelector('.popup').style.display = 'block';
-            setTimeout(function() {
-                document.querySelector('.popup').style.display = 'none';
-            }, 4000);  // 4秒後にポップアップを消す
-        }
-    </script>
-
-</body>
-</html>
+    <div class
