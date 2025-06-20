@@ -50,8 +50,8 @@
         /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  /* 自動で複数列に配置 */
-            grid-gap: 5px;  /* 画像同士の間隔 */
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  /* 100px幅で並べる */
+            grid-gap: 0px;  /* 画像同士の間隔をゼロに */
             position: absolute;
             top: 0;
             left: 0;
@@ -140,11 +140,6 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <img src="sample-image.JPG" alt="サンプル画像">
-        <!-- もっと増やすこともできます -->
     </div>
 
     <div class="date">2025.06.18</div>
@@ -166,4 +161,20 @@
     <div class="confetti" style="left: 90%; animation-delay: 5s;"></div>
     <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
     <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
-    <div class="confetti" style="left: 40%; animation-delay: 8
+    <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
+    <div class="confetti" style="left: 55%; animation-delay: 9s;"></div>
+    <div class="confetti" style="left: 70%; animation-delay: 10s;"></div>
+    <div class="confetti" style="left: 85%; animation-delay: 11s;"></div>
+
+    <script>
+        // ページが読み込まれたときにポップアップを表示
+        window.onload = function() {
+            document.querySelector('.popup').style.display = 'block';
+            setTimeout(function() {
+                document.querySelector('.popup').style.display = 'none';
+            }, 4000);  // 4秒後にポップアップを消す
+        }
+    </script>
+
+</body>
+</html>
