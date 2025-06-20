@@ -47,10 +47,10 @@
             100% { transform: translateY(0); }
         }
 
-        /* 画像が小さく並ぶように */
+        /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  /* 100px以上のサイズでグリッド配置 */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  /* 画像のサイズを調整 */
             grid-gap: 10px;  /* 画像同士の間隔 */
             position: absolute;
             top: 0;
@@ -58,7 +58,8 @@
             right: 0;
             bottom: 0;
             z-index: 1;  /* 背景として表示 */
-            opacity: 0.6;  /* 少し透過させて文字を見やすくする */
+            opacity: 0.5;  /* 少し透過させて文字を見やすくする */
+            padding-top: 150px;  /* 文字部分に被らないように上部に余白を作る */
         }
 
         .image-grid img {
@@ -129,6 +130,7 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
+        <!-- 必要に応じて画像の数を増やしてください -->
     </div>
 
     <div class="date">2025.06.18</div>
