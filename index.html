@@ -25,11 +25,9 @@
         h1 {
             color: #ff5733;  /* 鮮やかな赤 */
             font-size: 5em;  /* 大きめ */
-            /* margin-top: 5vh; ← 削除または調整 */
-            margin-top: 10vh; /* 画面上部からの位置を調整 */
             animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate;
             position: absolute; /* 絶対配置にすることで、中央寄せと独立して位置調整 */
-            top: 10vh; /* 画面上部から10%の位置に */
+            top: 18vh; /* 日付の下にくるように調整 */
             left: 50%;
             transform: translateX(-50%); /* 中央寄せ */
             z-index: 6;  /* 文字を最前面に表示 */
@@ -41,11 +39,9 @@
         .date {
             color: #ffad33;  /* 明るい黄色 */
             font-size: 4.5em;  /* 大きめ */
-            /* margin-bottom: 2vh; ← 削除または調整 */
-            margin-top: 25vh; /* h1の下にくるように調整 */
             animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards;
             position: absolute; /* 絶対配置 */
-            top: 25vh; /* h1の下にくるように調整 */
+            top: 5vh; /* 画面の一番上に調整 */
             left: 50%;
             transform: translateX(-50%); /* 中央寄せ */
             z-index: 6;  /* 文字を背景より前面に表示 */
@@ -62,8 +58,7 @@
             100% { transform: translateY(0) translateX(-50%); }
         }
         /* bounceアニメーションがtransformを上書きしないよう、個別にtranslateXを追加 */
-        h1 { animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate; }
-        .date { animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards; }
+        /* h1と.dateのanimationプロパティを修正（すでに定義済みなので変更は不要ですが、念のため） */
 
 
         /* 画像を小さく並べるグリッド */
@@ -109,13 +104,14 @@
             z-index: 3;
         }
 
-        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外に調整 */
+        /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外にさらに調整 */
         @keyframes float {
-            0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0.8; } /* 画面下端から開始 */
+            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
+            5% { opacity: 0.8; } /* 少し上がって見えるようになる */
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.8; } /* 画面上部外へ消える */
+            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面上部外へ消える、最後は透明 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -193,7 +189,6 @@
 
         .popup {
             position: fixed;
-            /* top: 80%; ← 変更 */
             top: 65%; /* 中央より少し下に調整 */
             left: 50%;
             transform: translate(-50%, -50%);
@@ -420,12 +415,11 @@
             confettiContainer.style.display = 'block';
             giftContainer.style.display = 'block';
 
-            // ポップアップを表示する（3秒後に表示されるように残しておく）
-            // ポップアップの表示タイミングを調整
+            // ポップアップを表示する（少し遅れて）
             setTimeout(() => {
                 overlay.style.display = 'block';
                 popup.style.display = 'block';
-            }, 500); // クリック後0.5秒で表示
+            }, 1000); // 1秒後に表示
 
             // エフェクトの生成を開始
             for (let i = 0; i < 300; i++) { createConfetti(); }
