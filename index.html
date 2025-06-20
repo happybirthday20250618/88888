@@ -16,7 +16,6 @@
             position: relative;
             overflow: hidden; /* スクロールを無効にする */
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
-            /* flexboxによる中央寄せを削除し、absolute positioningを主体に */
         }
 
         h1 {
@@ -101,12 +100,12 @@
 
         /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外にさらに調整 */
         @keyframes float {
-            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; }
-            5% { opacity: 0.8; }
+            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
+            5% { opacity: 0.8; } /* 少し上がって見えるようになる */
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.0; }
+            100% { transform: translateY(-120vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面上部外へさらに移動、最後は完全に透明 */
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -232,16 +231,15 @@
 
         /* プレゼントボックスのスタイル */
         #present-box {
-            position: absolute; /* absolute に変更 */
-            top: 50%; /* 画面中央に配置 */
+            position: absolute;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* 自身のサイズを考慮して完全に中央寄せ */
+            transform: translate(-50%, -50%);
             width: 250px;
             height: 250px;
             cursor: pointer;
             z-index: 7;
             animation: pulse 1.5s infinite ease-in-out;
-            /* margin-top: -10vh; ← 削除 */
         }
 
         #present-box img {
@@ -251,7 +249,7 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1) translate(-50%, -50%); } /* 中央寄せを維持 */
+            0% { transform: scale(1) translate(-50%, -50%); }
             50% { transform: scale(1.05) translate(-50%, -50%); }
             100% { transform: scale(1) translate(-50%, -50%); }
         }
@@ -260,7 +258,7 @@
         #tap-message {
             color: #666;
             font-size: 1.5em;
-            position: absolute; /* absolute に変更 */
+            position: absolute;
             top: calc(50% + 150px); /* プレゼントボックスの下に配置 */
             left: 50%;
             transform: translateX(-50%);
@@ -310,9 +308,7 @@
     <div id="present-box">
         <img src="gift_box_open.png" alt="プレゼントボックス">
     </div>
-    <div id="tap-message">タップして開いてね！</div>
-
-    <div class="confetti-container" id="confetti-container"></div>
+    <div id="tap-message">タップしてね！</div> <div class="confetti-container" id="confetti-container"></div>
     <div class="gift-container" id="gift-container"></div>
 
     <div class="popup-overlay" id="popup-overlay"></div>
@@ -330,11 +326,10 @@
         const giftContainer = document.getElementById('gift-container');
         const popup = document.getElementById('birthday-popup');
         const overlay = document.getElementById('popup-overlay');
-        const imageGrid = document.getElementById('image-grid'); // 画像グリッドの要素を取得
+        const imageGrid = document.getElementById('image-grid');
 
-        // 各エフェクトの生成関数（変更なし）
         const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0'];
-        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; // 3種類の風船画像
+        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png'];
         const giftImages = ['gift-box.png'];
 
         function createConfetti() {
