@@ -15,7 +15,7 @@
             padding: 0;
             position: relative;
             overflow-x: hidden;
-            min-height: 100vh; /* 画面の高さを最低でも100%にする */
+            min-height: 100vh;
         }
 
         h1 {
@@ -48,7 +48,7 @@
         .image-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);  /* 1行に6枚 */
-            grid-gap: 10px;
+            grid-gap: 0px;  /* 隙間をなくす */
             position: absolute;
             top: 0;
             left: 0;
@@ -76,7 +76,6 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
             0% { bottom: -150px; left: 5%; }
             25% { bottom: 20%; left: 25%; }
@@ -93,14 +92,6 @@
             height: 10px;
             background-color: #ffad33;
             animation: confettiFall 3s linear infinite;
-        }
-
-        .confetti:nth-child(odd) {
-            background-color: #ff5733; /* 追加で色を変更 */
-        }
-
-        .confetti:nth-child(even) {
-            background-color: #ffbc00;
         }
 
         @keyframes confettiFall {
@@ -200,4 +191,6 @@
     <!-- コンフェッティ -->
     <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
     <div class="confetti" style="left: 20%; animation-delay: 1s;"></div>
-    <div class="confetti" style="left: 30%;
+    <div class="confetti" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="confetti" style="left: 40%; animation-delay: 3s;"></div>
+    <div class="confetti" style="left: 50%; animation
