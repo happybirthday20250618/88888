@@ -21,7 +21,7 @@
         h1 {
             color: #ff5733;  /* 鮮やかな赤 */
             font-size: 4.5em;  /* 少し大きめに */
-            margin-top: 50px;
+            margin-top: 20px; /* ここを50pxから20pxに調整して上に移動 */
             animation: bounce 1.5s infinite ease-in-out;
             position: relative;
             z-index: 6;  /* 文字を最前面に表示 */
@@ -153,7 +153,7 @@
         /* ポップアップメッセージのスタイル */
         .popup {
             position: fixed; /* 画面中央に固定 */
-            top: 80%; /* 75%から80%に調整してさらに下に移動 */
+            top: 80%; /* ポップアップの位置はそのまま */
             left: 50%;
             transform: translate(-50%, -50%); /* 中央揃えの基準 */
             background-color: rgba(255, 255, 255, 0.95);
