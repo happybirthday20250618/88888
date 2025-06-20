@@ -23,7 +23,7 @@
             font-size: 4em;  /* 少し大きめに */
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
-            z-index: 2; /* 文字がGIFより前に表示されるように */
+            z-index: 2; /* 文字が画像より前に表示されるように */
             position: relative;
         }
 
@@ -74,12 +74,33 @@
             z-index: 3;
         }
 
+        /* スマホ対応のための調整 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3em;  /* スマホで文字サイズを少し小さく */
+            }
+
+            .date {
+                font-size: 2em;  /* 日付も少し小さく */
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));  /* 画像サイズを少し小さく */
+            }
+
+            .image-grid img {
+                border-radius: 3px;  /* 角を少し丸く */
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="image-grid">
-        <!-- 画像を増やして画面全体を埋める -->
+        <!-- 画像を18枚に増やして画面全体を埋める -->
+        <img src="sample-image.JPG" alt="サンプル画像">
+        <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
