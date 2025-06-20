@@ -100,7 +100,7 @@
 
         /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外にさらに調整 */
         @keyframes float {
-            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
+            0% { transform: translateY(120vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
             5% { opacity: 0.8; } /* 少し上がって見えるようになる */
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
@@ -183,7 +183,7 @@
 
         .popup {
             position: fixed;
-            top: 65%; /* 中央より少し下に調整 */
+            top: 75%; /* 中央よりさらに下に調整 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -308,7 +308,9 @@
     <div id="present-box">
         <img src="gift_box_open.png" alt="プレゼントボックス">
     </div>
-    <div id="tap-message">タップしてね！</div> <div class="confetti-container" id="confetti-container"></div>
+    <div id="tap-message">タップしてね！</div>
+
+    <div class="confetti-container" id="confetti-container"></div>
     <div class="gift-container" id="gift-container"></div>
 
     <div class="popup-overlay" id="popup-overlay"></div>
