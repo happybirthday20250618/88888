@@ -85,6 +85,19 @@
             to { opacity: 1; transform: scale(1); }
         }
 
+        /* バルーンコンテナのスタイル */
+        .balloon-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* コンテナからはみ出る風船を非表示にする */
+            pointer-events: none; /* クリックイベントを透過させる */
+            z-index: 3;
+            display: none; /* 初期状態では非表示 */
+        }
+
         /* バルーンのアニメーション */
         .balloon {
             position: absolute;
@@ -95,7 +108,7 @@
             background-size: contain;
             animation: float 15s ease-in-out infinite;
             opacity: 0.9;
-            z-index: 3;
+            /* z-indexはコンテナで設定済みなので不要 */
         }
 
         /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外のさらに下に調整 */
@@ -183,7 +196,7 @@
 
         .popup {
             position: fixed;
-            top: 90%; /* ここを90%に調整しました！ */
+            top: 95%; /* ここを95%に調整しました！ */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -312,8 +325,7 @@
 
     <div class="confetti-container" id="confetti-container"></div>
     <div class="gift-container" id="gift-container"></div>
-
-    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="balloon-container" id="balloon-container"></div> <div class="popup-overlay" id="popup-overlay"></div>
 
     <div class="popup" id="birthday-popup">
         <p>素敵な人生になりますように！🎉</p>
@@ -326,6 +338,7 @@
         const tapMessage = document.getElementById('tap-message');
         const confettiContainer = document.getElementById('confetti-container');
         const giftContainer = document.getElementById('gift-container');
+        const balloonContainer = document.getElementById('balloon-container'); // 新しく追加
         const popup = document.getElementById('birthday-popup');
         const overlay = document.getElementById('popup-overlay');
         const imageGrid = document.getElementById('image-grid');
@@ -359,7 +372,7 @@
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
             balloon.style.animationDelay = (Math.random() * 10) + 's';
-            document.body.appendChild(balloon);
+            balloonContainer.appendChild(balloon); // bodyではなくballoonContainerに追加
 
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
@@ -413,6 +426,7 @@
             // コンテナを表示状態にする
             confettiContainer.style.display = 'block';
             giftContainer.style.display = 'block';
+            balloonContainer.style.display = 'block'; // 風船コンテナを表示
             imageGrid.style.display = 'grid'; // 写真グリッドを表示
 
             // ポップアップを表示する（少し遅れて）
