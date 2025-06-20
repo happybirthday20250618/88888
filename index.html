@@ -24,16 +24,16 @@
             margin-top: 50px;
             animation: bounce 1.5s infinite ease-in-out;
             position: relative;
-            z-index: 2;  /* 文字を画像より前面に表示 */
+            z-index: 2;
         }
 
         .date {
             color: #ffad33;  /* 明るい黄色 */
-            font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
+            font-size: 4em;
             margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
             position: relative;
-            z-index: 2;  /* 文字を画像より前面に表示 */
+            z-index: 2;
         }
 
         @keyframes bounce {
@@ -44,11 +44,11 @@
             100% { transform: translateY(0); }
         }
 
-        /* 画像を小さく並べる */
+        /* 画像グリッド */
         .image-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);  /* 1行に6枚 */
-            grid-gap: 10px;  /* 画像同士の間隔 */
+            grid-gap: 10px;
             position: absolute;
             top: 0;
             left: 0;
@@ -56,7 +56,7 @@
             bottom: 0;
             z-index: 1;
             opacity: 0.5;
-            padding-top: 150px;  /* 文字部分に被らないように上部に余白を作る */
+            padding-top: 150px;
             height: 100vh;
         }
 
@@ -95,6 +95,14 @@
             animation: confettiFall 3s linear infinite;
         }
 
+        .confetti:nth-child(odd) {
+            background-color: #ff5733; /* 追加で色を変更 */
+        }
+
+        .confetti:nth-child(even) {
+            background-color: #ffbc00;
+        }
+
         @keyframes confettiFall {
             0% { transform: translateY(-100vh); }
             100% { transform: translateY(100vh); }
@@ -116,7 +124,7 @@
             z-index: 10;
         }
 
-        /* スターのアニメーション */
+        /* 背景にきらきら星 */
         .star {
             position: absolute;
             top: 0;
@@ -134,6 +142,16 @@
             50% { transform: scale(1.5); opacity: 1; }
             100% { transform: scale(1); opacity: 0.8; }
         }
+
+        /* 音楽が再生されるように設定（オプション） */
+        audio {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
@@ -144,8 +162,6 @@
 
     <!-- 画像が並ぶグリッド -->
     <div class="image-grid">
-        <!-- 画像を増やして画面全体を埋める -->
-        <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -177,4 +193,11 @@
     <div class="balloon" style="left: 35%; animation-delay: 3s;"></div>
     <div class="balloon" style="left: 45%; animation-delay: 4s;"></div>
     <div class="balloon" style="left: 55%; animation-delay: 5s;"></div>
-    <div class="balloon" style="left: 65%; animation-delay: 6s;"></
+    <div class="balloon" style="left: 65%; animation-delay: 6s;"></div>
+    <div class="balloon" style="left: 75%; animation-delay: 7s;"></div>
+    <div class="balloon" style="left: 85%; animation-delay: 8s;"></div>
+
+    <!-- コンフェッティ -->
+    <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="confetti" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="confetti" style="left: 30%;
