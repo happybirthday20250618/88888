@@ -16,21 +16,18 @@
             position: relative;
             overflow: hidden; /* スクロールを無効にする */
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
-            display: flex; /* 中央寄せのためにflexboxを使用 */
-            flex-direction: column; /* 縦方向に要素を並べる */
-            justify-content: center; /* 垂直方向中央寄せ */
-            align-items: center; /* 水平方向中央寄せ */
+            /* flexboxによる中央寄せを削除し、absolute positioningを主体に */
         }
 
         h1 {
             color: #ff5733;  /* 鮮やかな赤 */
             font-size: 5em;  /* 大きめ */
             animation: bounce 1.5s infinite ease-in-out, glow 2s infinite alternate;
-            position: absolute; /* 絶対配置にすることで、中央寄せと独立して位置調整 */
+            position: absolute;
             top: 18vh; /* 日付の下にくるように調整 */
             left: 50%;
             transform: translateX(-50%); /* 中央寄せ */
-            z-index: 6;  /* 文字を最前面に表示 */
+            z-index: 6;
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
             display: none; /* 初期状態では非表示 */
         }
@@ -40,11 +37,11 @@
             color: #ffad33;  /* 明るい黄色 */
             font-size: 4.5em;  /* 大きめ */
             animation: bounce 2s infinite ease-in-out, fadeInScale 1s ease-out forwards;
-            position: absolute; /* 絶対配置 */
+            position: absolute;
             top: 5vh; /* 画面の一番上に調整 */
             left: 50%;
             transform: translateX(-50%); /* 中央寄せ */
-            z-index: 6;  /* 文字を背景より前面に表示 */
+            z-index: 6;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
             display: none; /* 初期状態では非表示 */
         }
@@ -57,9 +54,6 @@
             75% { transform: translateY(-20px) translateX(-50%); }
             100% { transform: translateY(0) translateX(-50%); }
         }
-        /* bounceアニメーションがtransformを上書きしないよう、個別にtranslateXを追加 */
-        /* h1と.dateのanimationプロパティを修正（すでに定義済みなので変更は不要ですが、念のため） */
-
 
         /* 画像を小さく並べるグリッド */
         .image-grid {
@@ -76,6 +70,7 @@
             padding-top: 10vh;
             height: 100vh;
             overflow: hidden;
+            display: none; /* 初期状態では非表示 */
         }
 
         .image-grid img {
@@ -106,12 +101,12 @@
 
         /* 風船の浮遊アニメーションをランダム化 - 開始位置を画面外にさらに調整 */
         @keyframes float {
-            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面下端のさらに外から開始、最初は完全に透明 */
-            5% { opacity: 0.8; } /* 少し上がって見えるようになる */
+            0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0.0; }
+            5% { opacity: 0.8; }
             25% { transform: translateY(75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
             50% { transform: translateY(50vh) translateX(-150px) rotate(-8deg); opacity: 1; }
             75% { transform: translateY(25vh) translateX(75px) rotate(4deg); opacity: 0.9; }
-            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面上部外へ消える、最後は透明 */
+            100% { transform: translateY(-100px) translateX(0px) rotate(0deg); opacity: 0.0; }
         }
 
         /* コンフェッティ（紙吹雪）のコンテナ */
@@ -237,13 +232,16 @@
 
         /* プレゼントボックスのスタイル */
         #present-box {
-            position: relative;
+            position: absolute; /* absolute に変更 */
+            top: 50%; /* 画面中央に配置 */
+            left: 50%;
+            transform: translate(-50%, -50%); /* 自身のサイズを考慮して完全に中央寄せ */
             width: 250px;
             height: 250px;
             cursor: pointer;
             z-index: 7;
             animation: pulse 1.5s infinite ease-in-out;
-            margin-top: -10vh; /* 中央に配置するために少し上に移動 */
+            /* margin-top: -10vh; ← 削除 */
         }
 
         #present-box img {
@@ -253,16 +251,19 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1) translate(-50%, -50%); } /* 中央寄せを維持 */
+            50% { transform: scale(1.05) translate(-50%, -50%); }
+            100% { transform: scale(1) translate(-50%, -50%); }
         }
 
         /* 「タップしてね」メッセージのスタイル */
         #tap-message {
             color: #666;
             font-size: 1.5em;
-            margin-top: 20px;
+            position: absolute; /* absolute に変更 */
+            top: calc(50% + 150px); /* プレゼントボックスの下に配置 */
+            left: 50%;
+            transform: translateX(-50%);
             animation: fadeInOut 2s infinite;
             z-index: 7;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
@@ -276,7 +277,7 @@
 </head>
 <body>
 
-    <div class="image-grid">
+    <div class="image-grid" id="image-grid">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -329,6 +330,7 @@
         const giftContainer = document.getElementById('gift-container');
         const popup = document.getElementById('birthday-popup');
         const overlay = document.getElementById('popup-overlay');
+        const imageGrid = document.getElementById('image-grid'); // 画像グリッドの要素を取得
 
         // 各エフェクトの生成関数（変更なし）
         const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0'];
@@ -414,6 +416,7 @@
             // コンテナを表示状態にする
             confettiContainer.style.display = 'block';
             giftContainer.style.display = 'block';
+            imageGrid.style.display = 'grid'; // 写真グリッドを表示
 
             // ポップアップを表示する（少し遅れて）
             setTimeout(() => {
