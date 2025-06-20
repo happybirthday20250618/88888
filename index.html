@@ -348,7 +348,8 @@
         const imageGrid = document.getElementById('image-grid');
 
         const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0'];
-        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png'];
+        // ここにballoon1.pngを含む画像ファイル名が正しく記述されています
+        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; 
         const giftImages = ['gift-box.png'];
 
         function createConfetti() {
@@ -373,8 +374,7 @@
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
-            // CSSでbottom: -220px; を設定しているので、JSではbottomを動的に設定する必要はありません。
-            // balloon.style.bottom = `-220px`; // この行はCSSに記述されているので重複を避けるためにコメントアウトまたは削除します。
+            // CSSで `bottom: -220px;` を設定しているので、JSではbottomを動的に設定する必要はありません。
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10秒から20秒の範囲
             balloon.style.animationDelay = (Math.random() * 10) + 's'; // 0秒から10秒の範囲
