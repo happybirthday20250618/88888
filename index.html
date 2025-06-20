@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday</title>
-    <!-- Google Fontsの手書き風フォントを追加 -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
@@ -28,7 +27,6 @@
             z-index: 2;  /* 文字を画像より前面に表示 */
         }
 
-        /* 2025.06.18の日付 */
         .date {
             color: #ffad33;  /* 明るい黄色 */
             font-size: 4em;  /* Happy Birthday! と同じくらい大きく */
@@ -50,7 +48,7 @@
         /* 画像を小さく並べる */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  /* 自動で複数列に配置 */
+            grid-template-columns: repeat(4, 1fr);  /* 1行に4枚 */
             grid-gap: 5px;  /* 画像同士の間隔 */
             position: absolute;
             top: 0;
@@ -123,7 +121,7 @@
 
     <!-- 画像が並ぶグリッド -->
     <div class="image-grid">
-        <!-- 画像を増やして画面全体を埋める -->
+        <!-- 画像を20枚に増やして画面全体を埋める -->
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
@@ -144,7 +142,6 @@
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
         <img src="sample-image.JPG" alt="サンプル画像">
-        <!-- もっと増やすこともできます -->
     </div>
 
     <div class="date">2025.06.18</div>
@@ -166,4 +163,7 @@
     <div class="confetti" style="left: 90%; animation-delay: 5s;"></div>
     <div class="confetti" style="left: 10%; animation-delay: 6s;"></div>
     <div class="confetti" style="left: 25%; animation-delay: 7s;"></div>
-    <div class="confetti" style="left: 40%; animation-delay: 8
+    <div class="confetti" style="left: 40%; animation-delay: 8s;"></div>
+
+</body>
+</html>
