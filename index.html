@@ -106,17 +106,18 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
-            /* bottomはJSで設定するため、ここでは設定しない */
+            bottom: -220px; /* ここで風船を画面外の最下部に配置 */
             opacity: 0.9;
+            animation: float 15s ease-in-out infinite; /* JSでdurationとdelayを上書き */
         }
 
         /* 風船の浮遊アニメーションをランダム化 */
         @keyframes float {
-            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* bottomで設定された位置から開始 */
+            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* bottomで設定された位置から開始、垂直方向の移動は0vh */
             5% { opacity: 0.5; } /* ゆっくりと透明度が上がるように調整 */
-            25% { transform: translateY(-75vh) translateX(150px) rotate(8deg); opacity: 0.9; }
-            50% { transform: translateY(-120vh) translateX(-150px) rotate(-8deg); opacity: 1; }
-            75% { transform: translateY(-180vh) translateX(75px) rotate(4deg); opacity: 0.9; }
+            25% { transform: translateY(-75vh) translateX(150px) rotate(8deg); opacity: 0.9; } /* 上方向に移動 */
+            50% { transform: translateY(-120vh) translateX(-150px) rotate(-8deg); opacity: 1; } /* さらに上方向に移動 */
+            75% { transform: translateY(-180vh) translateX(75px) rotate(4deg); opacity: 0.9; } /* さらに上方向に移動 */
             85% { opacity: 0.0; } /* ここで完全に透明にする */
             100% { transform: translateY(-250vh) translateX(0px) rotate(0deg); opacity: 0.0; } /* 画面のさらに上へ移動 */
         }
@@ -196,7 +197,7 @@
 
         .popup {
             position: fixed;
-            top: 80%; /* ここを80%に調整しました！ */
+            top: 80%; /* ポップアップ位置 */
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.98);
@@ -372,7 +373,8 @@
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
-            balloon.style.bottom = `-220px`; // 風船の高さ分、画面外の下に配置
+            // CSSでbottom: -220px; を設定しているので、JSではbottomを動的に設定する必要はありません。
+            // balloon.style.bottom = `-220px`; // この行はCSSに記述されているので重複を避けるためにコメントアウトまたは削除します。
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10秒から20秒の範囲
             balloon.style.animationDelay = (Math.random() * 10) + 's'; // 0秒から10秒の範囲
