@@ -83,13 +83,12 @@
             position: absolute;
             width: 150px;
             height: 220px;
-            /* background: url('balloon.png') no-repeat center center; ← ここを削除またはコメントアウト */
-            background-repeat: no-repeat; /* 追加 */
-            background-position: center center; /* 追加 */
+            background-repeat: no-repeat;
+            background-position: center center;
             background-size: contain;
             animation: float 15s ease-in-out infinite;
             opacity: 0.9;
-            z-index: 3;
+            z-index: 3; /* 文字やポップアップよりは下だが、他の背景要素より上 */
         }
 
         /* 風船の浮遊アニメーションをランダム化 */
@@ -110,7 +109,7 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 4;
+            z-index: 4; /* パーティクルより少し下 */
         }
 
         .confetti {
@@ -138,7 +137,7 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 2; /* バルーンより少し下、背景より上 */
+            z-index: 2; /* バルーンより少し下、画像グリッドより上 */
         }
 
         .gift {
@@ -203,20 +202,23 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
-        /* パーティクルのスタイル */
+        /* パーティクルのスタイル - 再度調整 */
         .particle {
             position: absolute;
             background-color: #ffd700; /* キラキラの色 */
             border-radius: 50%; /* 丸い形 */
             opacity: 0;
+            /* z-index をバルーンやギフトボックスより低く、しかし背景より高く設定 */
+            /* 今回は body に直接追加されるため、z-indexは特に重要 */
+            z-index: 2.5; /* ギフトボックスとバルーンの間（任意） */
             animation: particleFloat var(--duration) linear infinite;
         }
 
         @keyframes particleFloat {
-            0% { transform: translateY(0vh) scale(0); opacity: 0; } /* 画面下から開始 */
-            10% { opacity: 0.8; transform: scale(1); } /* 少し上がって見えるようになる */
+            0% { transform: translateY(100vh) scale(0); opacity: 0; } /* 画面下から開始（初期位置を画面外に） */
+            10% { opacity: 0.8; transform: scale(1); } /* 画面内に入り、見えるようになる */
             90% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) scale(0); opacity: 0; } /* 画面上まで行って消える */
+            100% { transform: translateY(-50vh) scale(0); opacity: 0; } /* 画面上まで行って消える（画面外まで完全に移動） */
         }
     </style>
 </head>
@@ -289,18 +291,17 @@
             createConfetti();
         }
 
-        // バルーンを動的に生成するJavaScript - 新しく追加・修正
-        const balloonContainer = document.body; // body要素に直接追加します
+        // バルーンを動的に生成するJavaScript
+        const balloonContainer = document.body;
         const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; // ここに風船の画像ファイル名を追加！
 
         function createBalloon() {
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
             balloon.style.left = Math.random() * 100 + 'vw';
-            // ランダムな風船画像を適用
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
-            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 浮遊アニメーションの速度を調整
-            balloon.style.animationDelay = (Math.random() * 10) + 's'; // アニメーション開始の遅延
+            balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            balloon.style.animationDelay = (Math.random() * 10) + 's';
             balloonContainer.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
@@ -309,11 +310,9 @@
             });
         }
 
-        // 複数の風船を生成
-        for (let i = 0; i < 20; i++) { // 表示する風船の数
+        for (let i = 0; i < 20; i++) {
             createBalloon();
         }
-
 
         // ギフトボックスを動的に生成するJavaScript
         const giftContainer = document.getElementById('gift-container');
@@ -338,7 +337,7 @@
             createGift();
         }
 
-        // パーティクルを動的に生成するJavaScript
+        // パーティクルを動的に生成するJavaScript - 最終調整
         function createParticle() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
@@ -346,10 +345,11 @@
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             particle.style.left = `${Math.random() * 100}vw`;
-            particle.style.bottom = `-50px`;
+            // アニメーション開始時の bottom を調整し、画面下から出現させる
+            particle.style.bottom = `${Math.random() * 20 - 50}px`; // 画面下端の少し下からランダムに開始
             particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
             particle.style.animationDelay = `${Math.random() * 3}s`;
-            document.body.appendChild(particle);
+            document.body.appendChild(particle); // bodyに直接追加
 
             particle.addEventListener('animationend', () => {
                 particle.remove();
