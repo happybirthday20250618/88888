@@ -16,6 +16,10 @@
             position: relative;
             overflow: hidden; /* スクロールを無効にする */
             min-height: 100vh; /* 画面の高さを最低でも100%にする */
+            display: flex; /* 中央寄せのためにflexboxを使用 */
+            flex-direction: column; /* 縦方向に要素を並べる */
+            justify-content: center; /* 垂直方向中央寄せ */
+            align-items: center; /* 水平方向中央寄せ */
         }
 
         h1 {
@@ -26,6 +30,7 @@
             position: relative;
             z-index: 6;  /* 文字を最前面に表示 */
             text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4); /* 影をさらに強調 */
+            display: none; /* 初期状態では非表示 */
         }
 
         /* 2025.06.18の日付 */
@@ -37,6 +42,7 @@
             position: relative;
             z-index: 6;  /* 文字を背景より前面に表示 */
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+            display: none; /* 初期状態では非表示 */
         }
 
         /* テキストの跳ねるアニメーション */
@@ -88,7 +94,7 @@
             background-size: contain;
             animation: float 15s ease-in-out infinite;
             opacity: 0.9;
-            z-index: 3; /* 文字やポップアップよりは下だが、他の背景要素より上 */
+            z-index: 3;
         }
 
         /* 風船の浮遊アニメーションをランダム化 */
@@ -100,7 +106,7 @@
             100% { transform: translateY(-100vh) translateX(0px) rotate(0deg); opacity: 0.8; }
         }
 
-        /* コンフェッティ（紙吹雪）のアニメーション */
+        /* コンフェッティ（紙吹雪）のコンテナ */
         .confetti-container {
             position: absolute;
             top: 0;
@@ -109,7 +115,8 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 4; /* パーティクルより少し下 */
+            z-index: 4;
+            display: none; /* 初期状態では非表示 */
         }
 
         .confetti {
@@ -128,7 +135,7 @@
             100% { transform: translateY(100vh) rotate(1080deg); }
         }
 
-        /* Gift Box Animation */
+        /* Gift Box Animation (背景で動くギフトボックス) */
         .gift-container {
             position: absolute;
             bottom: 0;
@@ -137,14 +144,15 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 2; /* バルーンより少し下、画像グリッドより上 */
+            z-index: 2;
+            display: none; /* 初期状態では非表示 */
         }
 
         .gift {
             position: absolute;
-            width: 80px; /* ギフトボックスのサイズ */
+            width: 80px;
             height: 80px;
-            background: url('gift-box.png') no-repeat center center; /* ギフトボックスの画像を指定 */
+            background: url('gift-box.png') no-repeat center center;
             background-size: contain;
             animation: giftFloat var(--duration) ease-in-out infinite;
             opacity: 0.9;
@@ -155,17 +163,17 @@
             25% { bottom: 25%; transform: translateX(70px) scale(1.1); opacity: 0.9; }
             50% { bottom: 50%; transform: translateX(-70px) scale(1.2); opacity: 1; }
             75% { bottom: 75%; transform: translateX(40px) scale(1.1); opacity: 0.9; }
-            100% { bottom: 100vh; transform: translateX(0px) scale(0.8); opacity: 0.8; } /* 画面上部まで行って消える */
+            100% { bottom: 100vh; transform: translateX(0px) scale(0.8); opacity: 0.8; }
         }
 
-        /* ポップアップメッセージのスタイル */
+        /* ポップアップ時の背景オーバーレイのスタイル */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: transparent; /* 背景を完全に透明にする */
+            background-color: transparent;
             z-index: 9;
             display: none;
             opacity: 0;
@@ -179,12 +187,12 @@
             background-color: rgba(255, 255, 255, 0.98);
             padding: 25px 35px;
             border-radius: 20px;
-            font-size: 1.2em; /* ポップアップの文字サイズを調整 */
+            font-size: 1.2em;
             color: #ff5733;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            display: none;
+            display: none; /* 初期状態では非表示 */
             z-index: 10;
-            animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* 新しい登場アニメーション */
+            animation: popupAppear 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
             width: auto;
             max-width: 550px;
             white-space: nowrap;
@@ -202,23 +210,59 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
-        /* パーティクルのスタイル - 再度調整 */
+        /* パーティクルのスタイル */
         .particle {
             position: absolute;
-            background-color: #ffd700; /* キラキラの色 */
-            border-radius: 50%; /* 丸い形 */
+            background-color: #ffd700;
+            border-radius: 50%;
             opacity: 0;
-            /* z-index をバルーンやギフトボックスより低く、しかし背景より高く設定 */
-            /* 今回は body に直接追加されるため、z-indexは特に重要 */
-            z-index: 2.5; /* ギフトボックスとバルーンの間（任意） */
+            z-index: 2.5;
             animation: particleFloat var(--duration) linear infinite;
         }
 
         @keyframes particleFloat {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; } /* 画面下から開始（初期位置を画面外に） */
-            10% { opacity: 0.8; transform: scale(1); } /* 画面内に入り、見えるようになる */
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: scale(1); }
             90% { opacity: 0.8; }
-            100% { transform: translateY(-50vh) scale(0); opacity: 0; } /* 画面上まで行って消える（画面外まで完全に移動） */
+            100% { transform: translateY(-50vh) scale(0); opacity: 0; }
+        }
+
+        /* プレゼントボックスのスタイル */
+        #present-box {
+            position: relative; /* z-indexを適用するため */
+            width: 250px; /* プレゼントボックスのサイズ */
+            height: 250px;
+            cursor: pointer; /* クリックできることを示すカーソル */
+            z-index: 7; /* 他の要素より前面に */
+            animation: pulse 1.5s infinite ease-in-out; /* 脈打つようなアニメーション */
+            margin-top: -10vh; /* 中央に配置するために少し上に移動 */
+        }
+
+        #present-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 「タップしてね」メッセージのスタイル */
+        #tap-message {
+            color: #666;
+            font-size: 1.5em;
+            margin-top: 20px;
+            animation: fadeInOut 2s infinite;
+            z-index: 7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -251,13 +295,15 @@
         <img src="sample-image.JPG" alt="サンプル画像">
     </div>
 
-    <div class="date">2025.06.18</div>
-    <h1>Happy Birthday!</h1>
+    <div class="date" id="main-date">2025.06.18</div>
+    <h1 id="main-title">Happy Birthday!</h1>
+
+    <div id="present-box">
+        <img src="gift_box_open.png" alt="プレゼントボックス"> </div>
+    <div id="tap-message">タップして開いてね！</div>
 
     <div class="confetti-container" id="confetti-container"></div>
-
     <div class="gift-container" id="gift-container"></div>
-
     <div class="popup-overlay" id="popup-overlay"></div>
 
     <div class="popup" id="birthday-popup">
@@ -265,9 +311,19 @@
     </div>
 
     <script>
-        // コンフェッティを動的に生成するJavaScript
+        const mainDate = document.getElementById('main-date');
+        const mainTitle = document.getElementById('main-title');
+        const presentBox = document.getElementById('present-box');
+        const tapMessage = document.getElementById('tap-message');
         const confettiContainer = document.getElementById('confetti-container');
+        const giftContainer = document.getElementById('gift-container');
+        const popup = document.getElementById('birthday-popup');
+        const overlay = document.getElementById('popup-overlay');
+
+        // 各エフェクトの生成関数（変更なし）
         const colors = ['#ffad33', '#ff5733', '#ffc107', '#ffeb3b', '#8bc34a', '#2196f3', '#9c27b0', '#e91e63', '#9c27b0'];
+        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; // 3種類の風船画像
+        const giftImages = ['gift-box.png'];
 
         function createConfetti() {
             const confetti = document.createElement('div');
@@ -283,17 +339,9 @@
 
             confetti.addEventListener('animationend', () => {
                 confetti.remove();
-                createConfetti();
+                createConfetti(); // 継続的に生成
             });
         }
-
-        for (let i = 0; i < 300; i++) {
-            createConfetti();
-        }
-
-        // バルーンを動的に生成するJavaScript
-        const balloonContainer = document.body;
-        const balloonImages = ['balloon1.png', 'balloon2.png', 'balloon3.png']; // ここに風船の画像ファイル名を追加！
 
         function createBalloon() {
             const balloon = document.createElement('div');
@@ -302,21 +350,13 @@
             balloon.style.backgroundImage = `url(${balloonImages[Math.floor(Math.random() * balloonImages.length)]})`;
             balloon.style.animationDuration = (Math.random() * 10 + 10) + 's';
             balloon.style.animationDelay = (Math.random() * 10) + 's';
-            balloonContainer.appendChild(balloon);
+            document.body.appendChild(balloon);
 
             balloon.addEventListener('animationend', () => {
                 balloon.remove();
-                createBalloon();
+                createBalloon(); // 継続的に生成
             });
         }
-
-        for (let i = 0; i < 20; i++) {
-            createBalloon();
-        }
-
-        // ギフトボックスを動的に生成するJavaScript
-        const giftContainer = document.getElementById('gift-container');
-        const giftImages = ['gift-box.png'];
 
         function createGift() {
             const gift = document.createElement('div');
@@ -329,15 +369,10 @@
 
             gift.addEventListener('animationend', () => {
                 gift.remove();
-                createGift();
+                createGift(); // 継続的に生成
             });
         }
 
-        for (let i = 0; i < 40; i++) {
-            createGift();
-        }
-
-        // パーティクルを動的に生成するJavaScript - 最終調整
         function createParticle() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
@@ -345,31 +380,46 @@
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             particle.style.left = `${Math.random() * 100}vw`;
-            // アニメーション開始時の bottom を調整し、画面下から出現させる
-            particle.style.bottom = `${Math.random() * 20 - 50}px`; // 画面下端の少し下からランダムに開始
+            particle.style.bottom = `${Math.random() * 20 - 50}px`;
             particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
             particle.style.animationDelay = `${Math.random() * 3}s`;
-            document.body.appendChild(particle); // bodyに直接追加
+            document.body.appendChild(particle);
 
             particle.addEventListener('animationend', () => {
                 particle.remove();
-                createParticle();
+                createParticle(); // 継続的に生成
             });
         }
 
-        for (let i = 0; i < 80; i++) {
-            createParticle();
-        }
+        // --- クリックイベント処理 ---
+        presentBox.addEventListener('click', () => {
+            // プレゼントボックスと「タップしてね」メッセージを非表示にする
+            presentBox.style.display = 'none';
+            tapMessage.style.display = 'none';
 
-        // ポップアップメッセージを表示するJavaScript
-        window.onload = () => {
-            const popup = document.getElementById('birthday-popup');
-            const overlay = document.getElementById('popup-overlay');
-            setTimeout(() => {
-                overlay.style.display = 'block';
-                popup.style.display = 'block';
-            }, 3000);
-        };
+            // メッセージと日付を表示する
+            mainDate.style.display = 'block';
+            mainTitle.style.display = 'block';
+
+            // コンテナを表示状態にする
+            confettiContainer.style.display = 'block';
+            giftContainer.style.display = 'block';
+            // パーティクルとバルーンはbodyに直接追加されるので、コンテナのdisplay制御は不要
+
+            // ポップアップを表示する（これは3秒後に表示されるように残しておきます）
+            overlay.style.display = 'block';
+            popup.style.display = 'block';
+
+            // エフェクトの生成を開始
+            for (let i = 0; i < 300; i++) { createConfetti(); }
+            for (let i = 0; i < 20; i++) { createBalloon(); }
+            for (let i = 0; i < 40; i++) { createGift(); }
+            for (let i = 0; i < 80; i++) { createParticle(); }
+
+        });
+
+        // ページロード時はポップアップを表示しない
+        // window.onload の処理を削除しました
     </script>
 </body>
 </html>
